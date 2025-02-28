@@ -1,4 +1,4 @@
-package com.tad.contest.dto;
+package com.tad.contest.dto.object;
 
 import java.sql.Timestamp;
 

@@ -41,5 +41,5 @@ public class Contest {
     @Field(name = "status")
     private ContestStatus status;
 
-    private List<Long> problems;
+    private List<UUID> problems;
 }

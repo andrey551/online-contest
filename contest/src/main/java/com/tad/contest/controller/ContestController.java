@@ -1,10 +1,15 @@
 package com.tad.contest.controller;
 
-import com.tad.contest.model.Contest;
+import com.tad.contest.dto.object.ChangeStatusRequestDTO;
+import com.tad.contest.dto.object.ContestRequestDTO;
+import com.tad.contest.dto.object.ContestResponseDTO;
+import com.tad.contest.dto.wrapper.WrapperContestResponse;
+import com.tad.contest.dto.wrapper.WrapperContestsName;
 import com.tad.contest.service.ContestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,23 +21,55 @@ public class ContestController {
     @Autowired
     private ContestService contestService;
 
-    public List<Contest> getContests() {
-        return contestService.getContests();
+    @GetMapping("names")
+    public ResponseEntity<List<String>> getContestsName() {
+        WrapperContestsName response = contestService.getContestsName();
+
+        return new ResponseEntity<List<String>>(
+                response.contestsName(),
+                HttpStatus.valueOf(response.status().getCode()));
     }
 
-    public Contest getContestById(UUID id) {
-        return contestService.getContestById(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<ContestResponseDTO> getContestById(@PathVariable UUID id) {
+        WrapperContestResponse response = contestService.getContestById(id);
+
+        return new ResponseEntity<ContestResponseDTO>(
+                response.response(),
+                HttpStatus.valueOf(response.status().getCode()));
     }
 
-    public Contest createContest(Contest contest) {
-        return contestService.saveContest(contest);
+    @PostMapping("/")
+    public ResponseEntity<ContestResponseDTO> createContest(@RequestBody ContestRequestDTO contest) {
+        WrapperContestResponse response = contestService.addContest(contest);
+
+        return new ResponseEntity<ContestResponseDTO>(
+                response.response(),
+                HttpStatus.valueOf(response.status().getCode()));
     }
 
-    public Contest updateContest(Contest contest) {
-        return contestService.saveContest(contest);
+    @PutMapping("/")
+    public ResponseEntity<ContestResponseDTO> updateContest(@RequestBody ContestRequestDTO contest) {
+        WrapperContestResponse response = contestService.updateContest(contest);
+
+        return new ResponseEntity<ContestResponseDTO>(
+                response.response(),
+                HttpStatus.valueOf(response.status().getCode()));
     }
 
-//    public void deleteContest(UUID id) {
-//        contestService.deleteContest();
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ContestResponseDTO> deleteContest(@PathVariable UUID id) {
+        WrapperContestResponse response = contestService.deleteContest(id);
+
+        return new ResponseEntity<ContestResponseDTO>(
+                response.response(),
+                HttpStatus.valueOf(response.status().getCode()));
+    }
+
+    @PutMapping("/{status}")
+    public ResponseEntity updateStatus(@RequestBody ChangeStatusRequestDTO dto) {
+        WrapperContestResponse response = contestService.updateStatus(dto.contestId(), dto.status());
+
+        return new ResponseEntity<>(HttpStatus.valueOf(response.status().getCode()));
+    }
 }
