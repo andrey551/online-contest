@@ -1,4 +1,4 @@
-package com.tad.problem.dto;
+package com.tad.problem.dto.request;
 
 import com.tad.problem.model.enums.Tag;
 

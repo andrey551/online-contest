@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Table(name = "contest_user")
@@ -19,6 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "uuid")
+    private String uuid;
+
     @Column(name = "nickname")
     private String nickname;
 
@@ -30,9 +34,6 @@ public class User {
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "avatar")
-    private String avatar;
 
     @Column(name = "create_at")
     private Timestamp createdAt;

@@ -1,4 +1,4 @@
-package com.tad.problem.dto;
+package com.tad.problem.dto.object;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;

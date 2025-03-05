@@ -10,6 +10,5 @@ public record UserRequestDTO (
         @NotBlank String nickname,
         @NotBlank String fullname,
         @Nullable String organization,
-        @Email @NotBlank @NotNull String email,
-        @Nullable String avatar
+        @Email @NotBlank @NotNull String email
 ) {}

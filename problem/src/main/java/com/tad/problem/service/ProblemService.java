@@ -1,6 +1,10 @@
 package com.tad.problem.service;
 
-import com.tad.problem.dto.*;
+import com.tad.problem.dto.object.ListProblemName;
+import com.tad.problem.dto.request.ListProblemsRequest;
+import com.tad.problem.dto.request.ProblemRequest;
+import com.tad.problem.dto.response.ProblemResponse;
+import com.tad.problem.dto.response.ProblemsResponse;
 import com.tad.problem.mapper.ProblemMapper;
 import com.tad.problem.model.Problem;
 import com.tad.problem.model.enums.TransactionStatus;
@@ -16,6 +20,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import static com.tad.problem.ProblemApplication.logger;
 
 @Service
 public class ProblemService {
@@ -68,11 +74,14 @@ public class ProblemService {
             Problem problemToAdd = ProblemMapper.toProblem(problem);
 
             problemToAdd.setCreated(Timestamp.valueOf(LocalDateTime.now()));
+            problemToAdd.setId(UUID.randomUUID());
 
             Problem savedProblem = problemRepository.save(problemToAdd);
 
             return new ProblemResponse(savedProblem, TransactionStatus.SUCCESS);
         } catch (Exception e) {
+            logger.error(e.getMessage());
+
             return new ProblemResponse(null, TransactionStatus.INTERNAL_ERROR);
         }
     }
@@ -80,8 +89,11 @@ public class ProblemService {
     public ProblemResponse deleteProblemById(UUID id) {
         try {
             problemRepository.deleteById(id);
+
             return new ProblemResponse(null, TransactionStatus.SUCCESS);
         } catch (Exception e) {
+            logger.error(e.getMessage());
+
             return new ProblemResponse(null, TransactionStatus.INTERNAL_ERROR);
         }
     }

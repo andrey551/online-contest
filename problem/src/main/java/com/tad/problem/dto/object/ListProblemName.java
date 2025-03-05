@@ -1,4 +1,4 @@
-package com.tad.problem.dto;
+package com.tad.problem.dto.object;
 
 import java.util.List;
 

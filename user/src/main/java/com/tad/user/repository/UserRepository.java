@@ -8,15 +8,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByNickname(String username);
+
     Optional<User> findByEmail(String email);
 
     void deleteUserByEmail(String email);
 
     @Modifying
     @Transactional
-    @Query("UPDATE User u SET u.totalAttempt = u.totalAttempt + 1 WHERE u.email = :email")
-    void incrementCounterByEmail(@Param("email") String email);
+    @Query("UPDATE User u SET u.totalAttempt = u.totalAttempt + 1 WHERE u.uuid = :uuid")
+    void incrementCounterByEmail(@Param("uuid") String uuid);
+
+    Optional<User> findByUuid(String uuid);
+
+    void deleteByUuid(String uuid);
 }

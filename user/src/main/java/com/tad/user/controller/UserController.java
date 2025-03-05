@@ -3,13 +3,13 @@ package com.tad.user.controller;
 import com.tad.user.dto.UserRequestDTO;
 import com.tad.user.dto.UserResponseDTO;
 import com.tad.user.dto.WrapperResponse;
-import com.tad.user.model.User;
 import com.tad.user.service.UserService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.tad.user.UserApplication.logger;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -18,18 +18,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/{email}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String email) {
-        WrapperResponse response = userService.getUser(email);
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String uuid) {
+        WrapperResponse response = userService.getUser(uuid);
 
         return new ResponseEntity<>(
                 response.user(),
                 HttpStatus.valueOf(response.status().getCode()));
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable String email) {
-        WrapperResponse response = userService.deleteUser(email);
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable String uuid) {
+        WrapperResponse response = userService.deleteUser(uuid);
 
         return new ResponseEntity<>(
                 response.user(),
@@ -38,6 +39,7 @@ public class UserController {
 
     @PostMapping("/")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
+        logger.info(userRequestDTO.toString());
         WrapperResponse response = userService.addUser(userRequestDTO);
 
         return new ResponseEntity<>(
@@ -54,9 +56,9 @@ public class UserController {
                 HttpStatus.valueOf(response.status().getCode()));
     }
 
-    @GetMapping("/inc-attempt/{email}")
-    public ResponseEntity<UserResponseDTO> incAttempt( @PathVariable String email) {
-        WrapperResponse response = userService.incAttempt(email);
+    @GetMapping("/inc-attempt/{uuid}")
+    public ResponseEntity<UserResponseDTO> incAttempt( @PathVariable String uuid) {
+        WrapperResponse response = userService.incAttempt(uuid);
 
         return new ResponseEntity<>(
                 response.user(),

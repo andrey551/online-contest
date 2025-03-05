@@ -1,6 +1,6 @@
 package com.tad.problem.mapper;
 
-import com.tad.problem.dto.ProblemRequest;
+import com.tad.problem.dto.request.ProblemRequest;
 import com.tad.problem.model.Problem;
 
 public class ProblemMapper {
