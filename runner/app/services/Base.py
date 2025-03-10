@@ -1,2 +1,3 @@
-from uuid import UUID
-
+class Base:
+    def __init__(self):
+        pass

@@ -1,6 +1,4 @@
-import motor
-from pymongo import MongoClient
-from scipy._lib.cobyqa import problem
+import motor.motor_asyncio
 
 MONGO_DETAILS = "mongodb://localhost:27017"
 

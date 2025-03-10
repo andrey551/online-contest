@@ -1,88 +1,45 @@
+import os.path
+import zipfile
 import os
-import uuid
 
-import docker
+from pydantic import BaseModel
 
-from runner.app.models.Problem import Problem
-from runner.app.schemas.ScriptRequest import ScriptRequest
-from runner.app.schemas.ScriptResponse import ScriptResponse
+from runner.app.services.DockerManager import DockerManager, DockerResource
 
-class DockerRunner:
+class RunnerResource(DockerResource):
+    language: str
+
+class Runner:
     def __init__(self):
-        self.client = docker.from_env()
+        self.docker_manager = DockerManager()
 
-    # Run script with docker container
-    async def execute(self, data: ScriptRequest, tester: Problem) -> ScriptResponse:
-        temp_dir = f"/tmp/{uuid.uuid4()}"
-        os.makedirs(temp_dir, exist_ok=True)
+    """ Unzip project """
+    def extract_project(self, zip_path, extract_dir):
+        with zipfile.ZipFile(zip_path) as zip_file:
+            zip_file.extractall(extract_dir)
 
-        script_filename = {
-            "python": "script.py",
-            "node": "script.js",
-            "bash": "script.sh",
-            "ruby": "script.rb",
-            "php": "script.php",
-            "java": "Main.java",
-            "go": "script.go",
-            "rust": "script.rs",
-            "perl": "script.pl",
-        }.get(str(data.language), "script")
+    """Run project in docker container"""
+    def run_project_in_docker(self, resource : DockerResource):
+        container = self.docker_manager.createContainer(resource)
 
-        script_path = os.path.join(temp_dir, script_filename)
+        command = "sh -c '{build_command} && {run_command}'".format(build_command=resource.build_command , run_command=resource.run_command)
 
-#        Write script to a file
-        with open(script_path, "w") as f:
-            f.write(data.code)
+        """Create Docker container"""
+        container.run(
+            image=image,
+            command = "sh -c '{build_command} && {run_command}'".format(build_command=build_command , run_command=run_command),
+            volumes = {os.path.abspath(project_dir): {'bind':'/app', 'mode': 'rw'}},
+            working_dir = '/app',
+            detach = True,
+            ports = {'8000/tcp' : 8080},# Reflect container port to host
+            user="root",
+        )
+        return container
 
-        images = {
-            "python": "python:3.9",
-            "node": "node:14",
-            "bash": "bash",
-            "ruby": "ruby:3",
-            "php": "php:8",
-            "java": "openjdk:11",
-            "go": "golang:1.19",
-            "rust": "rust:1.65",
-            "perl": "perl:5",
-        }
 
-        if data.language not in images:
-            raise Exception(f"Unknown language: {data.language}")
 
-        commands = {
-            "python": f"python {script_filename}",
-            "node": f"node {script_filename}",
-            "bash": f"bash {script_filename}",
-            "ruby": f"ruby {script_filename}",
-            "php": f"php {script_filename}",
-            "java": f"javac {script_filename} && java Main",
-            "go": f"go run {script_filename}",
-            "rust": f"rustc {script_filename} && ./script",
-            "perl": f"perl {script_filename}",
-        }
 
-#         Run the script in a Docker container
-        try:
-            container = self.client.containers.run(
-                image=images[data.language],
-                command=commands[data.language],
-                volumes={temp_dir: {"bind": "/tmp", "mode": "rw"}},
-                working_dir="/tmp",
-                remove=True,
-                stdout=True,
-                stderr=True,
-            )
-            output = container.decode('utf-8')
-        except Exception as e:
-            output = str(e)
-        finally:
-            # Clean up the temporary directory
-            os.remove(script_filename)
-            os.remove(script_path)
-            os.rmdir(temp_dir)
 
-        return output
 
-# Initialize the DockerRunner
-runner = DockerRunner()
+
 
