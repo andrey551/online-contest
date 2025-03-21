@@ -1,13 +1,7 @@
-import os.path
 import zipfile
-import os
 
-from pydantic import BaseModel
-
-from runner.app.services.DockerManager import DockerManager, DockerResource
-
-class RunnerResource(DockerResource):
-    language: str
+from runner.app.models.Resource import ContainerResource
+from runner.app.services.DockerManager import DockerManager
 
 class Runner:
     def __init__(self):
@@ -19,21 +13,20 @@ class Runner:
             zip_file.extractall(extract_dir)
 
     """Run project in docker container"""
-    def run_project_in_docker(self, resource : DockerResource):
-        container = self.docker_manager.createContainer(resource)
+    def run_project_in_docker(self, image: str, resource : ContainerResource):
+        container = self.docker_manager.create_container(image, resource) # Create docker container
 
-        command = "sh -c '{build_command} && {run_command}'".format(build_command=resource.build_command , run_command=resource.run_command)
+        # container.run(
+        #     image=image,
+        #     command = "sh -c '{build_command} && {run_command}'".format(build_command=build_command , run_command=run_command),
+        #     volumes = {os.path.abspath(project_dir): {'bind':'/app', 'mode': 'rw'}},
+        #     working_dir = '/app',
+        #     detach = True,
+        #     ports = {'8000/tcp' : 8080},# Reflect container port to host
+        #     user="root",
+        # )
+        container.start()
 
-        """Create Docker container"""
-        container.run(
-            image=image,
-            command = "sh -c '{build_command} && {run_command}'".format(build_command=build_command , run_command=run_command),
-            volumes = {os.path.abspath(project_dir): {'bind':'/app', 'mode': 'rw'}},
-            working_dir = '/app',
-            detach = True,
-            ports = {'8000/tcp' : 8080},# Reflect container port to host
-            user="root",
-        )
         return container
 
 

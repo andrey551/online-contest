@@ -1,35 +1,25 @@
-from typing import Optional
+from fastapi import UploadFile, File, Form
 
-from fastapi import APIRouter, UploadFile, File, Form, FastAPI
 from starlette.responses import JSONResponse
 import logging
 
+from Base import app
+
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+""""
+Solution API: To control solution of students
+"""
 
-@app.post("/")
-async def insert_testset(file: UploadFile = File(...),
-                         name: str = Form(...),
-                         description: Optional[str] = Form(...)):
-    try:
-        with open(file.filename, "wb") as f:
-            while chunk := file.read(1024):
-                f.write(chunk)
 
-        from runner.app.schemas.testset.TestsetRequest import TestsetRequest
-        item = TestsetRequest(name=name, description=description)
-
-        return JSONResponse(
-            status_code=200,
-            content={"item": item}
-        )
-    except Exception as e:
-        return JSONResponse(
-            status_code=400,
-            content={"error": str(e)}
-        )
-
+""""
+Usage: Receive backend system solution from student
+Parameters:
+    File: A .zip file contain backend system solution
+    Language: Programming language of solution
+    Problem ID: Problem ID of solution 
+Return: 
+"""
 @app.post("/solution")
 async def submit_solution(file: UploadFile = File(...),
                            language: str = Form(...),
