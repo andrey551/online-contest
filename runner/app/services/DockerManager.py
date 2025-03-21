@@ -49,6 +49,7 @@ class DockerManager:
                 self.add_image(image)
             return self.client.containers.create(image = image,
                                                  detach=True,
+                                                 command = resource.command,
                                                  volumes=resource.volumes,
                                                  working_dir=resource.working_dir,
                                                  ports = resource.ports,
@@ -65,7 +66,7 @@ class DockerManager:
         except Exception as e:
             logging.error(e)
 
-
+docker_container = DockerManager()
 
 
 

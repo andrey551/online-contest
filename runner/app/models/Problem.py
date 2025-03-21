@@ -12,6 +12,3 @@ class Problem(BaseModel):
     problem_id: UUID
     problem_name: str
     testcases: TestCase
-
-    class Config:
-        json_encoders = {UUID: lambda v: str(v)}

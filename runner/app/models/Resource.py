@@ -1,15 +1,16 @@
-from pydantic import BaseModel, Field
-from uuid import UUID
+from typing import Optional, List
 
-from runner.app.models.Base import TimeStampBase
+from pydantic import BaseModel, Field, ConfigDict, SkipValidation
+from uuid import UUID
 
 class ContainerResource(BaseModel):
     image_name: str
     command: str
     working_dir: str
-    ports: dict[str, str]
+    ports: dict[str, int]
     user: str
 
-class Resource(TimeStampBase):
-    problem_id: UUID = Field(...)
-    list_images: [ContainerResource] = Field(...)
+class Resource(BaseModel):
+#    model_config = ConfigDict(arbitrary_types_allowed=True)  # Allow arbitrary types
+    problem_id: str
+    list_images: List[ContainerResource]

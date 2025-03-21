@@ -1,11 +1,12 @@
-from fastapi import UploadFile, File, Form
+from fastapi import UploadFile, File, Form, APIRouter
 
 from starlette.responses import JSONResponse
 import logging
 
-from Base import app
+# from Base import app
 
 logger = logging.getLogger(__name__)
+solution_router = APIRouter()
 
 """"
 Solution API: To control solution of students
@@ -20,14 +21,14 @@ Parameters:
     Problem ID: Problem ID of solution 
 Return: 
 """
-@app.post("/solution")
+@solution_router.post("/solution")
 async def submit_solution(file: UploadFile = File(...),
                            language: str = Form(...),
                            problem_id: str = Form(...)):
     logger.info("received file")
 
     try:
-        if(not file.filename.endswith(".zip")):
+        if not file.filename.endswith(".zip"):
             return JSONResponse(
                 status_code=400,
                 content={

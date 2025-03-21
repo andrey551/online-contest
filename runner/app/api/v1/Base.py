@@ -1,3 +1,7 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 
-app = FastAPI()
+base_router = APIRouter()
+
+@base_router.get('/runner/health')
+def health():
+    return {'status': 'ok'}

@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-from runner.app.models.Base import TimeStampBase
 from runner.app.schemas.enums.Status import Status
 
 

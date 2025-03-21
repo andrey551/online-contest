@@ -1,6 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from uuid import UUID
-
 
 class Request(BaseModel):
     url: str
@@ -14,6 +13,7 @@ class Response(BaseModel):
     body: str
 
 class TestSet(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     problem_id: UUID
     data: list[(Request, Response)]
     max_response_time: float

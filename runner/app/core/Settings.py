@@ -1,12 +1,15 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
+from typing import ClassVar
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Runner"
+    PROJECT_NAME: str = "Runner"  # Default value for PROJECT_NAME
+    ENGINE: str = "mongodb://localhost:27017"  # Default value for ENGINE
 
-    class Config:
-        env_file = ".env"
+    # Use ClassVar to define model_config
+    model_config: ClassVar[dict] = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8"
+    }
 
-    class DatabaseConfig:
-        ENGINE: str = "mongodb://localhost:27017"
-
+# Create an instance of Settings
 settings = Settings()
