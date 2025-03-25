@@ -1,6 +1,7 @@
 import logging
 from uuid import UUID
 
+from bson import ObjectId
 from fastapi import APIRouter
 
 from runner.app.models.Resource import Resource
@@ -19,6 +20,7 @@ async def require_resources(resource: Resource):
     logger.info("Adding resource")
     try:
         response = await insert_resource(resource)
+        logger.info(response)
         return response
     except Exception as e:
         logger.error(e)
@@ -49,9 +51,9 @@ def get_resources():
         return e
 
 @resource_router.get('/api/v1/resources/run/{id}')
-def run_resources():
+async def implement_resources(id: str):
     try:
-        response = impl_resource(id)
+        response = await impl_resource(id)
         return response
     except Exception as e:
         return e

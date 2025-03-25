@@ -1,33 +1,31 @@
-import zipfile
+import logging
 
 from runner.app.models.Resource import ContainerResource
+from runner.app.schemas.requests.Solution import SolutionRequest
 from runner.app.services.DockerManager import DockerManager
+from runner.app.services.FileManager import extract
+
+logger = logging.getLogger(__name__)
 
 class Runner:
     def __init__(self):
         self.docker_manager = DockerManager()
 
-    """ Unzip project """
-    def extract_project(self, zip_path, extract_dir):
-        with zipfile.ZipFile(zip_path) as zip_file:
-            zip_file.extractall(extract_dir)
+    """ Run project in docker container """
+    async def run_project_in_docker(self, resource : ContainerResource, solution: SolutionRequest):
+        logger.info(f'{solution.crt_dir}/{solution.zip_path}/{solution.file_name}')
+        logger.info(f'{solution.crt_dir}/{solution.extract_path}')
 
-    """Run project in docker container"""
-    def run_project_in_docker(self, image: str, resource : ContainerResource):
-        container = self.docker_manager.create_container(image, resource) # Create docker container
+        extract(f'{solution.crt_dir}/{solution.zip_path}/{solution.file_name}',
+                f'{solution.crt_dir}/{solution.extract_path}')
 
-        # container.run(
-        #     image=image,
-        #     command = "sh -c '{build_command} && {run_command}'".format(build_command=build_command , run_command=run_command),
-        #     volumes = {os.path.abspath(project_dir): {'bind':'/app', 'mode': 'rw'}},
-        #     working_dir = '/app',
-        #     detach = True,
-        #     ports = {'8000/tcp' : 8080},# Reflect container port to host
-        #     user="root",
-        # )
+        container = await self.docker_manager.create_container(resource, solution) # Create docker container
+        logger.info(f'Created container {container}')
         container.start()
 
         return container
+
+runner = Runner()
 
 
 
