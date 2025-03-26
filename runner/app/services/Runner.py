@@ -1,7 +1,7 @@
 import logging
 
 from runner.app.models.Resource import ContainerResource
-from runner.app.schemas.requests.Solution import SolutionRequest
+from runner.app.models.Solution import SolutionRequest
 from runner.app.services.DockerManager import DockerManager
 from runner.app.services.FileManager import extract
 

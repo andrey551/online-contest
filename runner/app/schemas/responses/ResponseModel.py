@@ -1,12 +1,10 @@
-from pydantic import BaseModel
+from typing import Optional, Any
+
+from pydantic import BaseModel, ConfigDict
+
 
 class BaseResponse(BaseModel):
-    status_code: int
-    headers: dict
-    body: str
-#
-# class ResponseSuccess(BaseResponse):
-#     data: dict
-#
-# class ResponseError(BaseResponse):
-#     message: str
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    status_code: Optional[int] = 200
+    headers: Optional[dict] = None
+    body: Any

@@ -1,4 +1,3 @@
-import os.path
 from datetime import datetime
 from pathlib import Path
 
@@ -7,9 +6,7 @@ from fastapi import APIRouter, UploadFile, File, Form
 from starlette.responses import JSONResponse
 import logging
 
-from uuid import UUID
-
-from runner.app.schemas.requests.Solution import SolutionRequest
+from runner.app.models.Solution import SolutionRequest
 from runner.app.services.SolutionManager import containerize_solution, insert_solution
 
 logger = logging.getLogger(__name__)

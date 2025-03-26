@@ -6,7 +6,7 @@ from docker.models.containers import Container
 
 from runner.app.exception.ImageDockerException import ImageDockerException
 from runner.app.models.Resource import ContainerResource
-from runner.app.schemas.requests.Solution import SolutionRequest
+from runner.app.models.Solution import SolutionRequest
 
 logger = logging.getLogger(__name__)
 
