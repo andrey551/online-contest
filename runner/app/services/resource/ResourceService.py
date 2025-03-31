@@ -1,17 +1,14 @@
-import json
-import uuid
-from argparse import Namespace
+
 from http.client import HTTPException, HTTPResponse
 
 from uuid import UUID
 
 import logging
-from bson import Binary, ObjectId
+from bson import ObjectId
 
 from runner.app.db.Database import resource_collection
 from runner.app.models.Resource import Resource
-from runner.app.services.DockerManager import DockerManager
-from runner.app.services.Runner import Runner
+from runner.app.services.docker.DockerManager import DockerManager
 
 logger = logging.getLogger(__name__)
 

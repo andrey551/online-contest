@@ -1,19 +1,20 @@
 import logging
 
+from bson import ObjectId
 from fastapi import HTTPException
 
 from runner.app.db.Database import solution_collection
-from runner.app.schemas.requests.Solution import SolutionRequest, to_solution
+from runner.app.models.Solution import SolutionRequest, to_solution
 from starlette.responses import JSONResponse
 
-from runner.app.services.ResourceService import get_resource, get_resource_by_problem_id
-from runner.app.services.Runner import runner
+from runner.app.services.resource.ResourceService import get_resource_by_problem_id
+from runner.app.services.docker.DockerRunner import runner
 
 logger = logging.getLogger(__name__)
 
-async def insert_solution(solution_req : SolutionRequest):
+async def insert_solution(solution_req : SolutionRequest, container_id: str):
     try:
-        solution = to_solution(solution_req)
+        solution = to_solution(solution_req, container_id)
 
         solution_ret = await solution_collection.insert_one(solution.dict())
 
@@ -37,8 +38,15 @@ async def insert_solution(solution_req : SolutionRequest):
     except Exception as e:
         logger.error(e)
 
-async def containerize_solution(solution_req : SolutionRequest):
+async def get_solution(solution_id:str) :
+    try:
+        solution = await solution_collection.find_one({"_id": ObjectId(solution_id)})
+        return solution
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=404, detail="Solution not found")
 
+async def containerize_solution(solution_req : SolutionRequest):
     try:
         problem_id_str = solution_req.problem_id
         resource = await get_resource_by_problem_id(problem_id_str)
@@ -47,8 +55,8 @@ async def containerize_solution(solution_req : SolutionRequest):
             raise Exception("Resource not found")
 
         container = await runner.run_project_in_docker(resource["list_images"][0], solution_req)
-
-        return container.id
+        logger.debug(container)
+        return container
     except AttributeError as e:
         logger.error(f"Model parsing error: {str(e)}")
         raise HTTPException(
@@ -57,4 +65,10 @@ async def containerize_solution(solution_req : SolutionRequest):
         )
     except Exception as e:
         logger.error(e)
+
+async def do_test(solution_id: str):
+    solution = await get_solution(solution_id)
+    if solution is None:
+        raise HTTPException(status_code=404, detail="Solution not found")
+
 

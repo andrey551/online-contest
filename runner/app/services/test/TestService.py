@@ -37,4 +37,5 @@ def delete_tests(test_id: UUID) -> BaseResponse:
 
     return BaseResponse(status_code = 200, headers=None, body = None)
 
-
+async def retrieve_test_by_problem_id(problem_id: UUID) -> TestSet|None:
+    return await test_collection.find_one({"problem_id": problem_id})

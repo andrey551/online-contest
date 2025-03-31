@@ -15,7 +15,7 @@ class DockerManager:
         self.client = docker.from_env()
 
     """ Check if image is existed, if not, pull it """
-    def add_image(self, image: str):
+    async def add_image(self, image: str):
         try:
             if image in self.client.images.list():
                 logger.info("Image already exists")
@@ -58,11 +58,11 @@ class DockerManager:
     async def create_container(self, resource: ContainerResource, solution: SolutionRequest) -> Container|None:
         try:
             if not self.is_image_exists(resource["image_name"]):
-                self.add_image(resource["image_name"])
+                await self.add_image(resource["image_name"])
             return self.client.containers.create(image = resource["image_name"],
                                                  detach=True,
                                                  command = resource["command"],
-                                                 volumes={os.path.abspath(f'{solution.crt_dir}/{solution.extract_path}/{solution.file_name.rstrip('.zip')}'): {'bind':'/app', 'mode': 'rw'}},
+                                                 volumes={os.path.abspath(f'{solution.crt_dir}/{solution.extract_path}/{solution.file_name.rstrip('.zip')}/'): {'bind':'/app', 'mode': 'rw'}},
                                                  working_dir="/app",
                                                  ports = {"80/tcp": solution.port},
                                                  user = resource["user"])
@@ -71,7 +71,7 @@ class DockerManager:
             return None
 
     """ Retrieve container by its name """
-    def retrieve_container(self, container: str) -> Container|None:
+    def  retrieve_container(self, container: str) -> Container|None:
         try:
             self.client.containers.get(container)
             return self.client.containers.get(container)
