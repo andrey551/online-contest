@@ -10,4 +10,9 @@ import lombok.Setter;
 public class CourseResponse
         extends BaseResponse {
     private RawCourse rawCourse;
+
+    public CourseResponse(TransactionStatus status, String message, RawCourse rawCourse) {
+        super(status, message);
+        this.rawCourse = rawCourse;
+    }
 }

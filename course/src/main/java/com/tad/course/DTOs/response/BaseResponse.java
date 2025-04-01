@@ -11,4 +11,9 @@ public abstract class BaseResponse {
     private TransactionStatus status;
     private String message;
 
+    public BaseResponse(TransactionStatus status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.tad.course.DTOs.response;
 
+import com.tad.course.DTOs.enums.TransactionStatus;
 import com.tad.course.DTOs.wrapper.LaboratoriesWrapper;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,4 +10,12 @@ import lombok.Setter;
 public class LaboratoriesResponse
         extends BaseResponse {
     LaboratoriesWrapper laboratories;
+
+    public LaboratoriesResponse(
+            TransactionStatus status,
+            String message,
+            LaboratoriesWrapper laboratories) {
+        super(status, message);
+        this.laboratories = laboratories;
+    }
 }

@@ -9,6 +9,6 @@ public record RawLaboratory(
         String tags,
         Timestamp createdTime,
         Timestamp deadline,
-        String teacher,
-        List<String> laboratories
+        String teacher
+
 ) {}
