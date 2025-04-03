@@ -1,0 +1,18 @@
+from enum import Enum
+
+
+class RequestMethod(Enum):
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    DELETE = "DELETE"
+    HEAD = "HEAD"
+    OPTIONS = "OPTIONS"
+    CONNECT = "CONNECT"
+    TRACE = "TRACE"
+    CONNECT_OPTIONS = "CONNECT_OPTIONS"
+    CONNECT_HTTP = "CONNECT_HTTP"
+    CONNECT_HTTPS = "CONNECT_HTTPS"
+    CONNECT_HTTPS_OPTIONS = "CONNECT_HTTPS_OPTIONS"
+
+
