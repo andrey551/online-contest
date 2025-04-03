@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service RunnerService {
+  rpc getContainerId (getContainerIdRequest) returns (getContainerIdResponse);
+}
+
+message getContainerIdRequest {
+  string laboratoryId = 1;
+}
+
+message getContainerIdResponse {
+  string containerId = 1;
+  int32 status = 2;
+}

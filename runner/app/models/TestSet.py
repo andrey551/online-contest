@@ -9,17 +9,21 @@ class Request(BaseModel):
     url: Optional[str]
     method: Optional[str]
     header: Optional[Dict[str, str]] = None
-    body: Optional[str]
+    body: Optional[str] = None
 
 class Response(BaseModel):
     status_code: Optional[int]
     header: Optional[Dict[str, str]] = None
-    body: Optional[str]
+    body: Optional[str] = None
+
+class Testcase(BaseModel):
+    request: Request
+    response: Response
 
 class TestSet(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
     _id: ObjectId = None
     problem_id: UUID = Form(...)
-    data: Optional[List[Union[Request, Response]]] = Form(...)
+    data: Optional[List[Testcase]] = Form(...)
     max_response_time: float = Form(...)
     max_memory_size: int = Form(...)

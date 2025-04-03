@@ -7,6 +7,7 @@ from runner.app.api.v1.Base import base_router
 from runner.app.api.v1.Resource import resource_router
 from runner.app.api.v1.Solution import solution_router
 from runner.app.api.v1.TestSet import test_set_router
+from runner.app.services.grpc.GrpcService import serve
 
 logging.basicConfig(
     level=logging.INFO,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
@@ -22,4 +23,7 @@ app.include_router(base_router)
 app.include_router(resource_router)
 app.include_router(solution_router)
 app.include_router(test_set_router)
+
+if __name__ == "__main__":
+    serve()
 

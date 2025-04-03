@@ -4,7 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from runner.app.models.TestSet import TestSet
-from runner.app.services.TestService import import_tests, delete_tests
+from runner.app.services.test.TestService import import_tests, delete_tests
 
 test_set_router = APIRouter()
 logger = logging.getLogger(__name__)
