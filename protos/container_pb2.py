@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x63ontainer.proto\"-\n\x15getContainerIdRequest\x12\x14\n\x0claboratoryId\x18\x01 \x01(\t\"=\n\x16getContainerIdResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x32R\n\rRunnerService\x12\x41\n\x0egetContainerId\x12\x16.getContainerIdRequest\x1a\x17.getContainerIdResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x63ontainer.proto\"-\n\x15getContainerIdRequest\x12\x14\n\x0claboratoryId\x18\x01 \x01(\t\"-\n\x16getContainerIdResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t2R\n\rRunnerService\x12\x41\n\x0egetContainerId\x12\x16.getContainerIdRequest\x1a\x17.getContainerIdResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,7 +34,7 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_GETCONTAINERIDREQUEST']._serialized_start=19
   _globals['_GETCONTAINERIDREQUEST']._serialized_end=64
   _globals['_GETCONTAINERIDRESPONSE']._serialized_start=66
-  _globals['_GETCONTAINERIDRESPONSE']._serialized_end=127
-  _globals['_RUNNERSERVICE']._serialized_start=129
-  _globals['_RUNNERSERVICE']._serialized_end=211
+  _globals['_GETCONTAINERIDRESPONSE']._serialized_end=111
+  _globals['_RUNNERSERVICE']._serialized_start=113
+  _globals['_RUNNERSERVICE']._serialized_end=195
 # @@protoc_insertion_point(module_scope)

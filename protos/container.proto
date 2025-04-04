@@ -10,5 +10,4 @@ message getContainerIdRequest {
 
 message getContainerIdResponse {
   string containerId = 1;
-  int32 status = 2;
 }
