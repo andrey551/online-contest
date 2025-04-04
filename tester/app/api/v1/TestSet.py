@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter
 
 from tester.app.models.TestSet import TestSet
+from tester.app.services.test.TestManager import get_container_id_by_laboratory_id, TestManager
 from tester.app.services.test.TestService import import_tests, delete_tests
 
 test_set_router = APIRouter()
@@ -28,8 +29,14 @@ def delete_tests(uuid: UUID):
     return response
 
 @test_set_router.put("/api/v1/test-set/{uuid}")
-def run_tests(uuid: UUID):
-    response = run_tests(uuid)
+async def run_tests(uuid: str):
+    tests = TestManager()
+    response = await tests.get_report(uuid)
+    return response
+
+@test_set_router.get("/api/v1/test-set/test/{uuid}")
+async def test(uuid: str):
+    response = await get_container_id_by_laboratory_id(uuid)
     return response
 
 
