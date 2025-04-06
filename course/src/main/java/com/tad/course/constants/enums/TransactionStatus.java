@@ -1,4 +1,4 @@
-package com.tad.course.DTOs.enums;
+package com.tad.course.constants.enums;
 
 import lombok.Getter;
 

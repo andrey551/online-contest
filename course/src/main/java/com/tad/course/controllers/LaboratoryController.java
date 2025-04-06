@@ -3,7 +3,6 @@ package com.tad.course.controllers;
 import com.tad.course.DTOs.request.LaboratoryRequest;
 import com.tad.course.DTOs.response.LaboratoriesResponse;
 import com.tad.course.DTOs.response.LaboratoryResponse;
-import com.tad.course.entities.Laboratory;
 import com.tad.course.services.LaboratoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.util.UUID;
 import static com.tad.course.mapper.LaboratoryMapper.toHttpResponse;
 
 @RestController
-@RequestMapping("/a[i/v1/laboratories")
+@RequestMapping("/api/v1/laboratories")
 public class LaboratoryController {
 
     @Autowired
@@ -34,9 +33,9 @@ public class LaboratoryController {
         return toHttpResponse(response);
     }
 
-    @GetMapping("/{course-id}")
-    public ResponseEntity getLaboratoryByCourse(@PathVariable("course-id") UUID courseId) {
-        LaboratoriesResponse response = laboratoryService.getLaboratoriesByCourseId(courseId);
+    @GetMapping("/course/{course-id}")
+    public ResponseEntity getLaboratoryByCourse(@PathVariable("course-id") String courseId) {
+        LaboratoriesResponse response = laboratoryService.getLaboratoriesByCourseId(UUID.fromString(courseId));
 
         return toHttpResponse(response);
     }
