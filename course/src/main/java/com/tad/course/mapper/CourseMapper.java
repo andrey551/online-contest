@@ -3,9 +3,13 @@ package com.tad.course.mapper;
 import com.tad.course.DTOs.raw.RawCourse;
 import com.tad.course.DTOs.request.CourseRequest;
 import com.tad.course.DTOs.response.CourseResponse;
+import com.tad.course.DTOs.wrapper.CoursesWrapper;
 import com.tad.course.entities.Course;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseMapper {
 
@@ -32,6 +36,7 @@ public class CourseMapper {
 
     public static RawCourse toRawCourse(Course course) {
         return new RawCourse(
+                course.getId().toString(),
                 course.getTeacherName(),
                 course.getTitle(),
                 course.getDescription(),
@@ -39,9 +44,14 @@ public class CourseMapper {
                 null);
     }
 
-    public static ResponseEntity toHttpResponse(CourseResponse course) {
-        return new ResponseEntity(
-                course.getRawCourse(),
-                HttpStatusCode.valueOf(course.getStatus().getCode()));
+    public static CoursesWrapper toCoursesWrapper(List<Course> courses) {
+        List<RawCourse> wrapper = new ArrayList<>();
+        for (Course course : courses) {
+            wrapper.add(toRawCourse(course));
+        }
+
+        return new CoursesWrapper(wrapper);
     }
+
+
 }

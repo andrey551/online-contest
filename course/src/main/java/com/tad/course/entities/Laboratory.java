@@ -1,44 +1,47 @@
 package com.tad.course.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Entity
 @Table(name = "laboratory")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = PRIVATE)
+@Builder
 public class Laboratory implements Serializable {
 
     @Id
     @Column(name = "_id")
-    private UUID id;
-
-    @Column(name = "course_id")
-    private UUID courseId;
+    UUID id;
 
     @Column(name = "title")
-    private String title;
+    String title;
 
     @Column(name = "description")
-    private String description;
+    String description;
 
     @Column(name = "tags")
-    private String tags;
+    String tags;
 
     @Column(name = "created")
-    private Timestamp created;
+    Timestamp created;
 
     @Column(name = "deadline")
-    private Timestamp deadline;
+    Timestamp deadline;
 
     @ManyToOne
     @JoinColumn(name="course_id", nullable=false)
-    private Course course;
+    Course course;
 }

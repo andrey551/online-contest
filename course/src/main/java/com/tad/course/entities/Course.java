@@ -1,40 +1,48 @@
 package com.tad.course.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Entity()
 @Table(name = "course")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = PRIVATE)
+@Builder
 public class Course implements Serializable {
     @Id
     @Column(name = "_id")
-    private UUID id;
+    UUID id;
 
     @Column(name = "title")
-    private String title;
+    String title;
 
     @Column(name = "description")
-    private String description;
+    String description;
 
 
     @Column(name = "teacher_id")
-    private UUID teacherId;
+    UUID teacherId;
 
     @Column(name = "teacher_name")
-    private String teacherName;
+    String teacherName;
 
     @Column(name = "semester")
-    private String semester;
+    String semester;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Laboratory> laboratories;
+
+    @ElementCollection
+    @CollectionTable(name = "student_ids", joinColumns = @JoinColumn(name = "course_id"))
+    @Column(name = "student_id")
+    List<UUID> students;
 }

@@ -2,7 +2,6 @@ package com.tad.course.mapper;
 
 import com.tad.course.DTOs.raw.RawLaboratory;
 import com.tad.course.DTOs.request.LaboratoryRequest;
-import com.tad.course.DTOs.response.CourseResponse;
 import com.tad.course.DTOs.response.LaboratoriesResponse;
 import com.tad.course.DTOs.response.LaboratoryResponse;
 import com.tad.course.entities.Laboratory;
@@ -15,7 +14,6 @@ public class LaboratoryMapper {
 
         laboratory.setTitle(laboratoryRequest.title());
         laboratory.setDescription(laboratoryRequest.description());
-        laboratory.setCourseId(laboratoryRequest.courseId());
         laboratory.setTags(laboratoryRequest.tags());
         laboratory.setDeadline(laboratoryRequest.deadline());
 
@@ -24,12 +22,12 @@ public class LaboratoryMapper {
 
     public static RawLaboratory toRawLaboratory(Laboratory laboratory) {
         return new RawLaboratory(
+                laboratory.getId().toString(),
                 laboratory.getTitle(),
                 laboratory.getDescription(),
                 laboratory.getTags(),
                 null,
-                laboratory.getDeadline(),
-                null);
+                laboratory.getDeadline());
     }
 
     public static ResponseEntity toHttpResponse(LaboratoryResponse laboratoryResponse) {
