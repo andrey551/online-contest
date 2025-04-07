@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+service FileTaskService {
+  rpc HandleFileTask (FileTaskRequest) returns (FileTaskResponse);
+}
+
+message FileTaskRequest {
+  bytes file_data = 1;
+  string filename = 2;
+  string task_type = 3; // "UPLOAD", "CREATE_DIR", "DELETE"
+  string target_path = 4;
+}
+
+message FileTaskResponse {
+  bool success = 1;
+  string message = 2;
+}
