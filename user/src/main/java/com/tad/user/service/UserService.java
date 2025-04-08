@@ -4,16 +4,16 @@ import com.tad.user.dto.UserRequestDTO;
 import com.tad.user.dto.WrapperResponse;
 import com.tad.user.mapper.UserMapper;
 import com.tad.user.model.User;
-import com.tad.user.model.enums.TransactionStatus;
+import com.tad.user.constants.enums.TransactionStatus;
 import com.tad.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.UUID;
 
 import static com.tad.user.UserApplication.logger;
-import static com.tad.user.utils.UUIDGenerator.generateUUIDFromString;
 
 @Service
 public class UserService {
@@ -25,8 +25,7 @@ public class UserService {
 
         try {
             User userToSave = UserMapper.toEntity(userDTO);
-
-            userToSave.setUuid(generateUUIDFromString(userToSave.getEmail()).toString());
+            userToSave.setTotalAttempt(0);
 
             User user = userRepository.save(userToSave);
 
@@ -60,9 +59,9 @@ public class UserService {
 
     }
 
-    public WrapperResponse deleteUser(String uuid) {
+    public WrapperResponse deleteUser(UUID uuid) {
         try {
-            userRepository.deleteByUuid(uuid);
+            userRepository.deleteById(uuid);
 
             return new WrapperResponse(TransactionStatus.SUCCESS, null);
         } catch (Exception e) {
@@ -70,9 +69,9 @@ public class UserService {
         }
     }
 
-    public WrapperResponse getUser(String UUID) {
+    public WrapperResponse getUser(UUID uuid) {
         try {
-            User user = userRepository.findByUuid(UUID).orElse(null);
+            User user = userRepository.findUserById(uuid).orElse(null);
             if (user == null) {
                 return new WrapperResponse(TransactionStatus.NOT_FOUND, null);
             }

@@ -9,18 +9,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.tad.user.UserApplication.logger;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
-
     @Autowired
     private UserService userService;
 
 
     @GetMapping("/{uuid}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable String uuid) {
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable UUID uuid) {
         WrapperResponse response = userService.getUser(uuid);
 
         return new ResponseEntity<>(
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable String uuid) {
+    public ResponseEntity<UserResponseDTO> deleteUser(@PathVariable UUID uuid) {
         WrapperResponse response = userService.deleteUser(uuid);
 
         return new ResponseEntity<>(
@@ -39,7 +40,6 @@ public class UserController {
 
     @PostMapping("/")
     public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        logger.info(userRequestDTO.toString());
         WrapperResponse response = userService.addUser(userRequestDTO);
 
         return new ResponseEntity<>(

@@ -10,7 +10,7 @@ import java.time.Instant;
 public class UserMapper {
     public static User toEntity(UserRequestDTO userRequestDTO) {
         User user = new User();
-        user.setOrganization(user.getOrganization());
+        user.setOrganization(userRequestDTO.organization());
         user.setNickname(userRequestDTO.nickname());
         user.setEmail(userRequestDTO.email());
         user.setFullName(userRequestDTO.fullname());
@@ -22,7 +22,7 @@ public class UserMapper {
 
     public static UserResponseDTO toDTO(User user) {
         return new UserResponseDTO(
-                user.getUuid(),
+                user.getId(),
                 user.getNickname(),
                 user.getFullName(),
                 user.getOrganization(),

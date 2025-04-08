@@ -1,6 +1,6 @@
 package com.tad.user.dto;
 
-import com.tad.user.model.enums.TransactionStatus;
+import com.tad.user.constants.enums.TransactionStatus;
 
 public record WrapperResponse(
         TransactionStatus status,

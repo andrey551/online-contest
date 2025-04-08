@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 import java.util.UUID;
 
 public record UserResponseDTO (
-        @NotBlank String uuid,
+        @NotBlank UUID uuid,
         @NotBlank String nickname,
         @NotBlank String fullname,
         @Nullable String organization,
