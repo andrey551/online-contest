@@ -1,4 +1,4 @@
-package com.tad.user.model.enums;
+package com.tad.user.constants.enums;
 
 import lombok.Getter;
 
