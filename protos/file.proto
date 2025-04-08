@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+option java_package = "com.tad.file.grpc";
+
 service FileTaskService {
   rpc HandleFileTask (FileTaskRequest) returns (FileTaskResponse);
 }
