@@ -1,28 +1,25 @@
 package com.tad.file.service;
 
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
+import com.google.cloud.storage.*;
 import com.google.storage.control.v2.*;
 import com.tad.file.exceptions.CreateBlobException;
 import com.tad.file.exceptions.CreateDirectoryException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import com.tad.file.exceptions.FileNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import static com.tad.file.constants.ExceptionMessage.FILE_NOT_FOUND_MESSAGE;
+
 @Service
 public class CloudStorageService {
-    @Autowired
-    private Environment environment;
-
     private final Storage storage;
 
-    private final String bucketName = environment.getProperty("CLOUD_STORAGE_BUCKET");
+    @Value("${cloud.storage.bucket}")
+    private String bucketName;
 
     public CloudStorageService() {
         this.storage = StorageOptions.getDefaultInstance().getService();
@@ -56,7 +53,7 @@ public class CloudStorageService {
 
             storage.create(blobInfo, file.getBytes());
 
-            return String.format("https://storage.googleapis.com/%s/%s", bucketName, fileName);
+            return String.format("https://storage.googleapis.com/%s/%s/%s", bucketName, directory, fileName);
         } catch (IOException e) {
             throw new CreateBlobException(e.toString());
         }
@@ -64,15 +61,22 @@ public class CloudStorageService {
 
     public void deleteFile(String fileName) {
         try (StorageControlClient storageControl = StorageControlClient.create()) {
-//
-//            // Set project to "_" to signify globally scoped bucket
-//            String folderResourceName = FolderName.format("_", bucketName, folderName);
-//            DeleteFolderRequest request =
-//                    DeleteFolderRequest.newBuilder().setName(folderResourceName).build();
-//
-//            storageControl.deleteFolder(request);
-//
-//            System.out.printf("Deleted folder: %s%n", folderResourceName);
+            Blob blob = storage.get(bucketName, fileName);
+            if (blob == null) {
+                throw new FileNotFoundException(FILE_NOT_FOUND_MESSAGE);
+            }
+            BlobId idWithGeneration = blob.getBlobId();
+            // Deletes the blob specified by its id. When the generation is present and non-null it will be
+            // specified in the request.
+            // If versioning is enabled on the bucket and the generation is present in the delete request,
+            // only the version of the object with the matching generation will be deleted.
+            // If instead you want to delete the current version, the generation should be dropped by
+            // performing the following.
+            // BlobId idWithoutGeneration =
+            //    BlobId.of(idWithGeneration.getBucket(), idWithGeneration.getName());
+            // storage.delete(idWithoutGeneration);
+            storage.delete(idWithGeneration);
+        } catch (FileNotFoundException ignored) {
         } catch (IOException e) {
             throw new CreateBlobException(e.toString());
         }

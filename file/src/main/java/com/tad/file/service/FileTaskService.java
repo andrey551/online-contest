@@ -1,34 +1,52 @@
 package com.tad.file.service;
 
+import com.tad.file.constants.FunctionMode;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.tad.file.grpc.FileTaskServiceGrpc;
+import com.tad.file.grpc.File;
+
+import static com.tad.file.constants.ExceptionMessage.FUNCTION_MODE_NOT_AVAILABLE;
+import static com.tad.file.constants.FileFormat.ZIP;
+import static com.tad.file.constants.ReturnMessage.OK;
+import static com.tad.file.utils.FileConverter.convertBytesToMultipartFile;
 
 @GrpcService
 public class FileTaskService extends FileTaskServiceGrpc.FileTaskServiceImplBase {
 
+    @Autowired
+    private CloudStorageService cloudStorageService;
+
     @Override
     public void handleFileTask(File.FileTaskRequest request,
                                StreamObserver<File.FileTaskResponse> responseObserver) {
-        String taskType = request.getTaskType();
+        FunctionMode taskType = FunctionMode.valueOf(request.getTaskType());
         String filename = request.getFilename();
         byte[] fileData = request.getFileData().toByteArray();
         String targetPath = request.getTargetPath();
+        MultipartFile file = convertBytesToMultipartFile(fileData,filename, filename, ZIP);
 
         boolean success = true;
 
-        String message = "OK";
-        // "UPLOAD", "CREATE_DIR", "DELETE"
+        String message = OK;
+
         try {
             switch (taskType) {
-                case "UPLOAD":
+                case UPLOAD:
+                    message = cloudStorageService.uploadFile(targetPath, file);
                     break;
-                case "CREATE_DIR":
+                case CREATE_DIR:
+                    message = cloudStorageService.createDirectory(targetPath);
                     break;
-                case "DELETE":
+                case DELETE:
+                    cloudStorageService.deleteFile(targetPath);
                     break;
                 default:
                     success = false;
-                    message = "Invalid task type";
+                    message = FUNCTION_MODE_NOT_AVAILABLE;
             }
         } catch (Exception e) {
             success = false;
