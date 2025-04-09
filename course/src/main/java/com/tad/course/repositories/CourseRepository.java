@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface CourseRepository
         extends BaseRepository<Course, UUID>{
 
-    List<Course> findByTeacherId(UUID teacherId);
+    Optional<List<Course>> findByTeacherId(UUID teacherId);
 
     @EntityGraph(attributePaths = {"students"})
     @Query("SELECT a FROM Course a WHERE :studentId MEMBER OF a.students")

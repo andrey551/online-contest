@@ -20,21 +20,21 @@ public class LaboratoryController {
     private LaboratoryService laboratoryService;
 
     @PostMapping("/")
-    public ResponseEntity createLaboratory(@RequestBody LaboratoryRequest lab) {
+    public ResponseEntity<LaboratoryResponse> createLaboratory(@RequestBody LaboratoryRequest lab) {
         LaboratoryResponse response = laboratoryService.addLaboratory(lab);
 
         return toHttpResponse(response);
     }
 
     @GetMapping("/{laboratory-id}")
-    public ResponseEntity getLaboratory(@PathVariable("laboratory-id") UUID laboratoryId) {
+    public ResponseEntity<LaboratoryResponse> getLaboratory(@PathVariable("laboratory-id") UUID laboratoryId) {
         LaboratoryResponse response = laboratoryService.getLaboratoryById(laboratoryId);
 
         return toHttpResponse(response);
     }
 
     @GetMapping("/course/{course-id}")
-    public ResponseEntity getLaboratoryByCourse(@PathVariable("course-id") String courseId) {
+    public ResponseEntity<LaboratoriesResponse> getLaboratoryByCourse(@PathVariable("course-id") String courseId) {
         LaboratoriesResponse response = laboratoryService.getLaboratoriesByCourseId(UUID.fromString(courseId));
 
         return toHttpResponse(response);

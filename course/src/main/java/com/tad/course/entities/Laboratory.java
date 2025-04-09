@@ -24,6 +24,7 @@ public class Laboratory implements Serializable {
 
     @Id
     @Column(name = "_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
     @Column(name = "title")
@@ -40,6 +41,9 @@ public class Laboratory implements Serializable {
 
     @Column(name = "deadline")
     Timestamp deadline;
+
+    @Column(name = "directory")
+    String directory;
 
     @ManyToOne
     @JoinColumn(name="course_id", nullable=false)

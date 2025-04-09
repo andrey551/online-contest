@@ -1,6 +1,7 @@
 package com.tad.course.services;
 
 
+import com.google.protobuf.ByteString;
 import com.tad.course.DTOs.request.CourseAddStudentRequest;
 import com.tad.course.constants.enums.TransactionStatus;
 import com.tad.course.DTOs.request.CourseRequest;
@@ -9,28 +10,35 @@ import com.tad.course.DTOs.response.CoursesResponse;
 import com.tad.course.entities.Course;
 import com.tad.course.exceptions.CourseNotFoundException;
 import com.tad.course.repositories.CourseRepository;
+import com.tad.file.grpc.File;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+import static com.tad.course.constants.FunctionMode.CREATE_DIR_MODE;
 import static com.tad.course.constants.TransactionMessage.*;
 import static com.tad.course.mapper.CourseMapper.*;
 
+@Slf4j
 @Service
 public class CourseService {
+    private final CourseRepository courseRepository;
+    private final FileTaskGrpcClient client;
 
     @Autowired
-    private CourseRepository courseRepository;
+    public CourseService(CourseRepository courseRepository,
+                         FileTaskGrpcClient client) {
+        this.courseRepository = courseRepository;
+        this.client = client;
+    }
 
     public CourseResponse getCourseById(UUID id) {
         try {
-            Course course = courseRepository.findById(id).orElse(null);
-
-            if (course == null) {
-                throw new CourseNotFoundException();
-            }
+            Course course = courseRepository.findById(id)
+                                            .orElseThrow(CourseNotFoundException::new);
 
             return new CourseResponse(TransactionStatus.SUCCESS,
                                         null,
@@ -53,11 +61,8 @@ public class CourseService {
 
     public CoursesResponse getCoursesByTeacherId(UUID teacherId) {
         try {
-            List<Course> courses = courseRepository.findByTeacherId(teacherId);
-
-            if(courses.isEmpty()) {
-                throw new CourseNotFoundException();
-            }
+            List<Course> courses = courseRepository.findByTeacherId(teacherId)
+                                                   .orElseThrow(CourseNotFoundException::new);
 
             return new CoursesResponse(
                     TransactionStatus.SUCCESS,
@@ -83,7 +88,8 @@ public class CourseService {
 
     public CoursesResponse getCoursesByStudentId(UUID studentId) {
         try {
-            List<Course> courses = courseRepository.findByStudentId(studentId).orElse(null);
+            List<Course> courses = courseRepository.findByStudentId(studentId)
+                                                   .orElse(null);
 
             assert courses != null;
             return new CoursesResponse(
@@ -108,7 +114,16 @@ public class CourseService {
             course.setTeacherName(teacherName);
             course.setTeacherId(teacherId);
 
-            course.setId(UUID.randomUUID());
+            File.FileTaskResponse response = client.sendFileTask(ByteString.EMPTY.toByteArray(),
+                                                                "",
+                                                                CREATE_DIR_MODE,
+                                                                course.getTitle());
+
+            if(response.getSuccess()) {
+                course.setDirectory(response.getMessage());
+            } else {
+                log.info("Can't create dir on cloud");
+            }
 
             Course courseSaved = courseRepository.save(course);
 
@@ -116,6 +131,7 @@ public class CourseService {
                     null,
                     toRawCourse(courseSaved));
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new CourseResponse(TransactionStatus.INTERNAL_ERROR,
                     INTERNAL_ERROR_MESSAGE,
                                         null);

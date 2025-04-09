@@ -3,6 +3,7 @@ package com.tad.course.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,6 +21,7 @@ import static lombok.AccessLevel.PRIVATE;
 public class Course implements Serializable {
     @Id
     @Column(name = "_id")
+    @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
     @Column(name = "title")
@@ -37,6 +39,9 @@ public class Course implements Serializable {
 
     @Column(name = "semester")
     String semester;
+
+    @Column(name = "directory")
+    String directory;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Laboratory> laboratories;
