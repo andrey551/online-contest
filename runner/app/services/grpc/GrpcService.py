@@ -1,10 +1,15 @@
-from runner.app.protos import container_pb2_grpc
-from runner.app.protos.container_pb2_grpc import RunnerServiceServicer
+import logging
+
+from protos import container_pb2_grpc
+from protos.container_pb2_grpc import RunnerServiceServicer
 from runner.app.services.solution.SolutionManager import get_container_id_by_laboratory_id
 
-import runner.app.protos.container_pb2 as container_pb2
+import protos.container_pb2 as container_pb2
+from grpc import aio
 import grpc
 from concurrent import futures
+
+logger = logging.getLogger(__name__)
 
 class GrpcService(RunnerServiceServicer):
     def __init__(self):
@@ -12,12 +17,18 @@ class GrpcService(RunnerServiceServicer):
 
     async def getContainerId(self, request, context):
         container_id = await get_container_id_by_laboratory_id(request.laboratoryId)
+        # g
+        return container_pb2.getContainerIdResponse(containerId=container_id)
 
-        return container_pb2.getContainerIdResponse(container_id, 200)
+async def serve():
+    try:
+        server = aio.server()
+        container_pb2_grpc.add_RunnerServiceServicer_to_server(GrpcService(), server)
+        server.add_insecure_port("[::]:50051")
+        await server.start()
+        logger.info('gRPC server started on port 50051')
+        await server.wait_for_termination()
+    except Exception as e:
+        logger.error(e)
 
-def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    container_pb2_grpc.add_RunnerServiceServicer_to_server(RunnerServiceServicer(), server)
-    server.add_insecure_port("[::]:50051")
-    server.start()
-    server.wait_for_termination()
+

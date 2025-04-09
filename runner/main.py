@@ -1,5 +1,6 @@
-
+import asyncio
 import logging
+import threading
 
 from fastapi import FastAPI
 
@@ -24,6 +25,9 @@ app.include_router(resource_router)
 app.include_router(solution_router)
 app.include_router(test_set_router)
 
-if __name__ == "__main__":
-    serve()
+@app.on_event("startup")
+def startup_event():
+    asyncio.create_task(serve())
+    print("🚀 FastAPI started and gRPC server is running in background")
+
 

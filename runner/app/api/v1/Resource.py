@@ -1,11 +1,10 @@
 import logging
 from uuid import UUID
 
-from bson import ObjectId
 from fastapi import APIRouter
 
 from runner.app.models.Resource import Resource
-from runner.app.services.ResourceService import insert_resource, impl_resource, update_resource, delete_resource, \
+from runner.app.services.resource.ResourceService import insert_resource, impl_resource, update_resource, delete_resource, \
     get_resource
 
 resource_router = APIRouter()
