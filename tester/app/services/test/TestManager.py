@@ -7,8 +7,8 @@ import requests
 from docker.models.containers import Container
 
 from tester.app.models.Record import Record
-from tester.app.models.TestSet import TestSet, Testcase, Request
-from protos import container_pb2, container_pb2_grpc
+from tester.app.models.TestSet import Testcase, Request
+from tester.app.generated import container_pb2, container_pb2_grpc
 from tester.app.schemas.enums.Status import Status
 from tester.app.services.test.DockerManager import get_container
 from tester.app.services.test.TestService import retrieve_test_by_problem_id
