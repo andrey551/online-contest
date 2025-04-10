@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.tad.submission.grpc";
+
+service SubmissionTaskService {
+  rpc HandleSubmissionTask (SubmissionTaskRequest) returns (SubmissionTaskResponse);
+}
+
+message SubmissionTaskRequest {
+  string task_type = 1; // "UPLOAD_LINK", "UPDATE_RESULT"
+  string data = 2;
+}
+
+message SubmissionTaskResponse {
+  bool success = 1;
+}
