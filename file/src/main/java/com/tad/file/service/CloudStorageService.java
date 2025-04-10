@@ -5,6 +5,7 @@ import com.google.storage.control.v2.*;
 import com.tad.file.exceptions.CreateBlobException;
 import com.tad.file.exceptions.CreateDirectoryException;
 import com.tad.file.exceptions.FileNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.nio.file.Paths;
 
 import static com.tad.file.constants.ExceptionMessage.FILE_NOT_FOUND_MESSAGE;
 
+@Slf4j
 @Service
 public class CloudStorageService {
     private final Storage storage;
@@ -27,20 +29,21 @@ public class CloudStorageService {
 
     public String createDirectory(String directory) {
         try (StorageControlClient storageControl = StorageControlClient.create()) {
-
             CreateFolderRequest request =
                     CreateFolderRequest.newBuilder()
-                            .setParent(BucketName.format("_", bucketName))
+                            .setParent(bucketName)
                             .setFolderId(directory)
                             .build();
-
             Folder newFolder = storageControl.createFolder(request);
-
+            log.info("Creating folder {}", newFolder.getName());
             return newFolder.getName();
         } catch (IOException e) {
+            log.error(e.getMessage(), e);
             throw new CreateDirectoryException(e.toString());
+        } catch ( Exception e) {
+            log.error(e.getMessage(), e);
         }
-
+        return null;
     }
 
     public String uploadFile(String directory, MultipartFile file) {

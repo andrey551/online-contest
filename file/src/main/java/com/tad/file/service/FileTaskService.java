@@ -2,6 +2,7 @@ package com.tad.file.service;
 
 import com.tad.file.constants.FunctionMode;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,8 +15,10 @@ import static com.tad.file.constants.FileFormat.ZIP;
 import static com.tad.file.constants.ReturnMessage.OK;
 import static com.tad.file.utils.FileConverter.convertBytesToMultipartFile;
 
+@Slf4j
 @GrpcService
-public class FileTaskService extends FileTaskServiceGrpc.FileTaskServiceImplBase {
+public class FileTaskService
+       extends FileTaskServiceGrpc.FileTaskServiceImplBase {
 
     @Autowired
     private CloudStorageService cloudStorageService;
@@ -29,6 +32,8 @@ public class FileTaskService extends FileTaskServiceGrpc.FileTaskServiceImplBase
         String targetPath = request.getTargetPath();
         MultipartFile file = convertBytesToMultipartFile(fileData,filename, filename, ZIP);
 
+//       Log info
+        log.info(String.format("Task: %s %s %s", filename, targetPath, taskType));
         boolean success = true;
 
         String message = OK;
@@ -52,6 +57,8 @@ public class FileTaskService extends FileTaskServiceGrpc.FileTaskServiceImplBase
             success = false;
             message = e.getMessage();
         }
+
+        log.info("Message: " + message);
 
         File.FileTaskResponse resp = File.FileTaskResponse
                                          .newBuilder()
