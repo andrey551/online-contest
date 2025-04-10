@@ -1,39 +1,51 @@
 package com.tad.submission.model;
 
-import com.tad.submission.model.enums.SubmissionState;
+import com.tad.submission.constants.enums.SubmissionState;
+import com.tad.submission.model.converters.TestResultConverter;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "submission")
-public class Submission {
+public class Submission implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private UUID id;
+    UUID id;
 
     @Column(name = "user_id")
-    private UUID userId;
+    UUID userId;
 
-    @Column(name = "problem_id")
-    private UUID problemId;
+    @Column(name = "laboratory_id")
+    UUID laboratoryId;
+
+    @Column(name = "download_link")
+    String downloadLink;
 
     @Column(name = "submission_date")
-    private Timestamp submissionDate;
+    Timestamp submissionDate;
 
     @Column(name = "total_tests")
-    private Integer totalTests;
+    Integer totalTests;
 
     @Column(name = "total_passed_tests")
-    private Integer totalPassedTests;
+    Integer totalPassedTests;
 
-    private SubmissionState state;
+    @Convert(converter = TestResultConverter.class)
+    @Column(columnDefinition = "jsonb")
+    TestResult result;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "state")
+    SubmissionState state;
 }

@@ -1,4 +1,4 @@
-package com.tad.submission.model.enums;
+package com.tad.submission.constants.enums;
 
 public enum SubmissionState {
     WAITING,
