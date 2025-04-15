@@ -1,5 +1,6 @@
 package com.tad.submission.service;
 
+import com.tad.submission.constants.enums.SubmissionState;
 import com.tad.submission.constants.enums.TransactionStatus;
 import com.tad.submission.dto.raw.DetailSubmissionRaw;
 import com.tad.submission.dto.raw.ShortenSubmissionRaw;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,6 +31,24 @@ public class SubmissionService {
     @Autowired
     public SubmissionService(SubmissionRepository submissionRepository) {
         this.submissionRepository = submissionRepository;
+    }
+
+    public UUID createSubmission(UUID userId, UUID laboratoryId) {
+        try {
+            Submission submission = Submission.builder()
+                    .userId(userId)
+                    .laboratoryId(laboratoryId)
+                    .state(SubmissionState.WAITING)
+                    .submissionDate(new Timestamp(System.currentTimeMillis()))
+                    .build();
+            Submission saved = submissionRepository.save(submission);
+            return saved.getId();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
+
     }
 
     public GetDetailResponse getDetail(UUID request) {
