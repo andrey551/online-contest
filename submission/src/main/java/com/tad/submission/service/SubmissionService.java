@@ -3,8 +3,6 @@ package com.tad.submission.service;
 import com.tad.submission.constants.enums.TransactionStatus;
 import com.tad.submission.dto.raw.DetailSubmissionRaw;
 import com.tad.submission.dto.raw.ShortenSubmissionRaw;
-import com.tad.submission.dto.request.GetDetailRequest;
-import com.tad.submission.dto.request.GetSubmissionsRequest;
 import com.tad.submission.dto.request.UpdateLinkRequest;
 import com.tad.submission.dto.request.UpdateResultRequest;
 import com.tad.submission.dto.response.GetDetailResponse;
@@ -19,19 +17,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.tad.submission.constants.message.ResponseMessage.*;
 
 @Service
 @Slf4j
 public class SubmissionService {
+    private final SubmissionRepository submissionRepository;
 
     @Autowired
-    private SubmissionRepository submissionRepository;
+    public SubmissionService(SubmissionRepository submissionRepository) {
+        this.submissionRepository = submissionRepository;
+    }
 
-    public GetDetailResponse getDetail(GetDetailRequest request) {
+    public GetDetailResponse getDetail(UUID request) {
         try {
-            DetailSubmissionRaw raw = submissionRepository.getDetailSubmission(request.laboratoryId())
+            DetailSubmissionRaw raw = submissionRepository.getDetailSubmission(request)
                                                           .orElseThrow(NotFoundException::new);
 
             return new GetDetailResponse(HttpStatus.OK, NULL, raw);
@@ -43,10 +45,9 @@ public class SubmissionService {
         }
     }
 
-    public GetSubmissionsResponse getSubmissions(GetSubmissionsRequest request) {
+    public GetSubmissionsResponse getSubmissions(UUID studentId, UUID laboratoryId) {
         try {
-            List<ShortenSubmissionRaw> raw = submissionRepository.getShortenedSubmissions(request.userId(),
-                                                                                          request.laboratoryId())
+            List<ShortenSubmissionRaw> raw = submissionRepository.getShortenedSubmissions(studentId, laboratoryId)
                                                                  .orElseThrow(NotFoundException::new);
 
             return new GetSubmissionsResponse(HttpStatus.OK, NULL, new ShortenSubmissionsWrapper(raw));
@@ -60,11 +61,17 @@ public class SubmissionService {
 
     public TransactionStatus updateDownloadLink(UpdateLinkRequest updateLinkRequest) {
         try {
-            submissionRepository.updateDownloadLinkById(updateLinkRequest.submissionId(),
-                                                        updateLinkRequest.link());
+            Submission submission = submissionRepository.getSubmissionById(updateLinkRequest.submissionId())
+                                                        .orElseThrow(NotFoundException::new);
+
+            submission.setDownloadLink(updateLinkRequest.link());
+            submissionRepository.save(submission);
 
             return TransactionStatus.SUCCESS;
-        } catch (Exception e) {
+        } catch (NotFoundException e) {
+            return TransactionStatus.NOT_FOUND;
+        }
+        catch (Exception e) {
             log.error(e.getMessage(), e);
             return TransactionStatus.FAILURE;
         }
