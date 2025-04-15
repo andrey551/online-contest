@@ -4,6 +4,7 @@ option java_package = "com.tad.submission.grpc";
 
 service SubmissionTaskService {
   rpc HandleSubmissionTask (SubmissionTaskRequest) returns (SubmissionTaskResponse);
+  rpc HandleCreateSubmission(CreateSubmissionRequest) returns (CreateSubmissionResponse);
 }
 
 message SubmissionTaskRequest {
@@ -13,4 +14,13 @@ message SubmissionTaskRequest {
 
 message SubmissionTaskResponse {
   bool success = 1;
+}
+
+message CreateSubmissionRequest {
+  string user_id = 1;
+  string laboratory_id = 2;
+}
+
+message CreateSubmissionResponse {
+  string submission_id = 1;
 }
