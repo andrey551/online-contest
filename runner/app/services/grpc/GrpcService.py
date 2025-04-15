@@ -15,7 +15,6 @@ class GrpcService(RunnerServiceServicer):
 
     async def getContainerId(self, request, context):
         container_id = await get_container_id_by_laboratory_id(request.laboratoryId)
-        # g
         return container_pb2.getContainerIdResponse(containerId=container_id)
 
 async def serve():

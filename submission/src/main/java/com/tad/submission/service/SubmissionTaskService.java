@@ -1,7 +1,5 @@
 package com.tad.submission.service;
 
-
-import com.tad.file.grpc.File;
 import com.tad.submission.constants.enums.FunctionMode;
 import com.tad.submission.grpc.Submission;
 import io.grpc.stub.StreamObserver;
@@ -16,10 +14,15 @@ import java.util.UUID;
 @GrpcService
 public class SubmissionTaskService
        extends SubmissionTaskServiceGrpc.SubmissionTaskServiceImplBase{
-    @Autowired
-    private SubmissionService submissionService;
+    private final SubmissionService submissionService;
 
-    public void HandleSubmissionTask(Submission.SubmissionTaskRequest request,
+    @Autowired
+    public SubmissionTaskService(SubmissionService submissionService) {
+        this.submissionService = submissionService;
+    }
+
+    @Override
+    public void handleSubmissionTask(Submission.SubmissionTaskRequest request,
                                      StreamObserver<Submission.SubmissionTaskResponse> responseObserver) {
         FunctionMode taskType = FunctionMode.valueOf(request.getTaskType());
         String data = request.getData();
@@ -32,8 +35,9 @@ public class SubmissionTaskService
 //        responseObserver.onNext(resp);
 //        responseObserver.onCompleted();
     }
-    
-    public void HandleCreateSubmission(Submission.CreateSubmissionRequest request,
+
+    @Override
+    public void handleCreateSubmission(Submission.CreateSubmissionRequest request,
                                        StreamObserver<Submission.CreateSubmissionResponse> responseObserver) {
         UUID userId = UUID.fromString(request.getUserId());
         UUID laboratoryId = UUID.fromString(request.getLaboratoryId());

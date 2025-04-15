@@ -2,9 +2,12 @@ import logging
 import os
 
 import docker
+import grpc
 from docker.models.containers import Container
+from google.protobuf.json_format import MessageToDict
 
 from runner.app.exception.ImageDockerException import ImageDockerException
+from runner.app.generated import submission_pb2_grpc, submission_pb2
 from runner.app.models.Resource import ContainerResource
 from runner.app.models.Solution import SolutionRequest
 
@@ -77,6 +80,16 @@ class DockerManager:
             return self.client.containers.get(container)
         except Exception as e:
             logger.error(e)
+async def create_submission(user_id: str, laboratory_id: str):
+    try:
+        with grpc.insecure_channel('localhost:9090') as channel:
+            stub = submission_pb2_grpc.SubmissionTaskServiceStub(channel)
+            response = stub.HandleCreateSubmission(submission_pb2.CreateSubmissionRequest(user_id = user_id, laboratory_id = laboratory_id))
+            logger.info(f"Submission response: {response}")
+        return MessageToDict(response)
+    except Exception as e:
+        raise RuntimeError(e)
+
 
 docker_container = DockerManager()
 

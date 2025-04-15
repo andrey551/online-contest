@@ -19,21 +19,11 @@ async def insert_solution(solution_req : SolutionRequest, container_id: str):
         solution_ret = await solution_collection.insert_one(solution.dict())
 
         if solution_ret.inserted_id:
-            return JSONResponse(
-                status_code=200,
-                content={
-                    "status": "success",
-                    "solution_id": str(solution_ret.inserted_id)
-                }
-            )
+
+            return str(solution_ret.inserted_id)
+
         else:
-            return JSONResponse(
-                status_code=400,
-                content={
-                    "status": "failure",
-                    "message": "Failed to insert solution"
-                }
-            )
+            raise HTTPException(status_code=404, detail="Solution not found")
 
     except Exception as e:
         logger.error(e)

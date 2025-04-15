@@ -7,6 +7,8 @@ from starlette.responses import JSONResponse
 import logging
 
 from runner.app.models.Solution import SolutionRequest
+from runner.app.schemas.responses.ResponseModel import SendSolutionResponse
+from runner.app.services.docker.DockerManager import create_submission
 from runner.app.services.solution.SolutionManager import containerize_solution, insert_solution
 from runner.app.services.solution.SolutionRunner import run_and_check_solution
 
@@ -59,8 +61,16 @@ async def submit_solution(problem_id: str = Form(...),
         container_id = await containerize_solution(solution_request)
         logger.info(f"Container ID: {container_id}")
         solution = await insert_solution(solution_request, str(container_id))
+        submission_id = await create_submission(user_id=author_id,laboratory_id=problem_id)
 
-        return solution
+        return JSONResponse(
+            status_code=200,
+            content={
+                "submission_id": submission_id["submissionId"],
+                "solution_id":solution
+            }
+        )
+
     except Exception as e:
         return JSONResponse(
             status_code=400,

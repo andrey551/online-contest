@@ -5,6 +5,7 @@ import com.tad.submission.model.converters.TestResultConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -42,8 +43,10 @@ public class Submission implements Serializable {
     Integer totalPassedTests;
 
     @Convert(converter = TestResultConverter.class)
-    @Column(columnDefinition = "jsonb")
+//    @Column(columnDefinition = "jsonb")
+    @Column(name = "result")
     TestResult result;
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "state")

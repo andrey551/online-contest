@@ -11,6 +11,7 @@ import com.tad.submission.dto.response.GetSubmissionsResponse;
 import com.tad.submission.dto.wrapper.ShortenSubmissionsWrapper;
 import com.tad.submission.exceptions.NotFoundException;
 import com.tad.submission.model.Submission;
+import com.tad.submission.model.TestResult;
 import com.tad.submission.repository.SubmissionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,11 +37,13 @@ public class SubmissionService {
 
     public UUID createSubmission(UUID userId, UUID laboratoryId) {
         try {
+            log.info("Creating new submission {}, {}", userId, laboratoryId);
             Submission submission = Submission.builder()
                     .userId(userId)
                     .laboratoryId(laboratoryId)
                     .state(SubmissionState.WAITING)
                     .submissionDate(new Timestamp(System.currentTimeMillis()))
+                    .result(new TestResult(null, null, null))
                     .build();
             Submission saved = submissionRepository.save(submission);
             return saved.getId();
