@@ -5,7 +5,8 @@ service RunnerService {
 }
 
 message getContainerIdRequest {
-  string laboratoryId = 1;
+  string solutionId = 1;
+  string submissionId = 2;
 }
 
 message getContainerIdResponse {
