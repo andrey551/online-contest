@@ -25,8 +25,10 @@ async def update_if_exist_or_create(solution_req : SolutionRequest, container_id
                                            {"$set": {"file_name": solution.file_name,
                                                      "container_id": solution.container_id,
                                                      "submit_time": datetime.now()}})
-            return exist_solution["_id"]
+            logger.info(f"Updated {solution.problem_id} to {solution.author_id}")
+            return str(exist_solution["_id"])
         else:
+            logger.info(f"Created {solution.problem_id} to {solution.author_id}")
             return await insert_solution(solution_req, container_id)
 
     except Exception as e:
