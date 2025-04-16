@@ -2,7 +2,8 @@ import logging
 
 from runner.app.generated import container_pb2_grpc
 from runner.app.generated.container_pb2_grpc import RunnerServiceServicer
-from runner.app.services.solution.SolutionManager import get_container_id_by_laboratory_id
+from runner.app.services.solution.SolutionManager import get_container_id_by_laboratory_id, \
+    get_container_id_by_solution_id
 
 import runner.app.generated.container_pb2 as container_pb2
 from grpc import aio
@@ -14,7 +15,7 @@ class GrpcService(RunnerServiceServicer):
         pass
 
     async def getContainerId(self, request, context):
-        container_id = await get_container_id_by_laboratory_id(request.laboratoryId)
+        container_id = await get_container_id_by_solution_id(request.solutionId)
         return container_pb2.getContainerIdResponse(containerId=container_id)
 
 async def serve():

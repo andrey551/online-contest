@@ -43,7 +43,7 @@ public class SubmissionService {
                     .laboratoryId(laboratoryId)
                     .state(SubmissionState.WAITING)
                     .submissionDate(new Timestamp(System.currentTimeMillis()))
-                    .result(new TestResult(null, null, null))
+                    .result(new TestResult(0,0,null, null, null))
                     .build();
             Submission saved = submissionRepository.save(submission);
             return saved.getId();
@@ -107,6 +107,8 @@ public class SubmissionService {
                                                         .orElseThrow(NotFoundException::new);
 
             submission.setResult(updateResultRequest.result());
+            submission.setTotalTests(updateResultRequest.result().getTotal());
+            submission.setTotalPassedTests(updateResultRequest.result().getPassed());
             submissionRepository.save(submission);
 
             return TransactionStatus.SUCCESS;

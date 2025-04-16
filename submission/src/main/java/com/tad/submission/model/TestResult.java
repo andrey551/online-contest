@@ -13,7 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TestResult {
-    List<String> statusList;
-    List<Double> timeResponse;
-    List<Long> memoryUsed;
+    int total;
+    int passed;
+    List<String> status_list;
+    List<Double> time_response;
+    List<Long> memory_used;
 }

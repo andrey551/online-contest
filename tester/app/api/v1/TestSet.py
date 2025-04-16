@@ -1,11 +1,13 @@
 import logging
 from uuid import UUID
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Form
 
 from tester.app.models.TestSet import TestSet
-from tester.app.services.test.TestManager import get_container_id_by_laboratory_id, TestManager
+from tester.app.schemas.requests.RequestModel import RunTestRequestModel
+from tester.app.services.test.TestManager import TestManager
 from tester.app.services.test.TestService import import_tests, delete_tests
+from tester.app.services.test.gRPCService import get_container_id_by_laboratory_id
 
 test_set_router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -28,10 +30,10 @@ def delete_tests(uuid: UUID):
     response = delete_tests(uuid)
     return response
 
-@test_set_router.put("/api/v1/test-set/{uuid}")
-async def run_tests(uuid: str):
+@test_set_router.post("/api/v1/test-set/run")
+async def run_tests(request: RunTestRequestModel):
     tests = TestManager()
-    response = await tests.get_report(uuid)
+    response = await tests.get_report(request)
     return response
 
 @test_set_router.get("/api/v1/test-set/test/{uuid}")

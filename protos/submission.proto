@@ -9,7 +9,8 @@ service SubmissionTaskService {
 
 message SubmissionTaskRequest {
   string task_type = 1; // "UPLOAD_LINK", "UPDATE_RESULT"
-  string data = 2;
+  string submission_id = 2;
+  string data = 3;
 }
 
 message SubmissionTaskResponse {

@@ -88,6 +88,16 @@ async def get_container_id_by_laboratory_id( laboratory_id: str):
         logger.error(e)
         raise HTTPException(status_code=404, detail="Solution not found")
 
+async def get_container_id_by_solution_id( solution_id: str):
+    try:
+        resource = await solution_collection.find_one({"_id": ObjectId(solution_id)})
+        if resource is None:
+            raise Exception("Resource not found")
+        return resource["container_id"]
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(status_code=404, detail="Solution not found")
+
 
 async def do_test(solution_id: str):
     solution = await get_solution(solution_id)
