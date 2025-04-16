@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from bson import ObjectId
 from fastapi import HTTPException
@@ -11,6 +12,25 @@ from runner.app.services.resource.ResourceService import get_resource_by_problem
 from runner.app.services.docker.DockerRunner import runner
 
 logger = logging.getLogger(__name__)
+
+async def update_if_exist_or_create(solution_req : SolutionRequest, container_id: str):
+    try:
+        solution = to_solution(solution_req, container_id)
+
+        exist_solution = await solution_collection.find_one({"problem_id": solution.problem_id,
+                                                       "author_id": solution.author_id})
+
+        if exist_solution:
+            solution_collection.update_one({"_id": ObjectId(exist_solution["_id"])},
+                                           {"$set": {"file_name": solution.file_name,
+                                                     "container_id": solution.container_id,
+                                                     "submit_time": datetime.now()}})
+            return exist_solution["_id"]
+        else:
+            return await insert_solution(solution_req, container_id)
+
+    except Exception as e:
+        logger.error(e)
 
 async def insert_solution(solution_req : SolutionRequest, container_id: str):
     try:
