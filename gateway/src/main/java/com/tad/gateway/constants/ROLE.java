@@ -3,7 +3,8 @@ package com.tad.gateway.constants;
 public enum ROLE {
     STUDENT("STUDENT"),
     TEACHER("TEACHER"),
-    ADMIN("ADMIN");
+    ADMIN("ADMIN"),
+    UNAUTHORIZED("UNAUTHORIZED");
 
     private String code;
 

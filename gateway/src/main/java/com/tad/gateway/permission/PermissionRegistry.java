@@ -12,9 +12,15 @@ import static com.tad.gateway.constants.ROLE.*;
 
 @Component
 public class PermissionRegistry {
-    public List<RoutePermission> getPermissions() {
-        return List.of(
-                new RoutePermission(POST, "api/v1/courses/", List.of(STUDENT, TEACHER))
-        );
+    private final List<PermissionProvider> providers;
+
+    public PermissionRegistry(List<PermissionProvider> providers) {
+        this.providers = providers;
+    }
+
+    public List<RoutePermission> getAllPermissions() {
+        return providers.stream()
+                .flatMap(p -> p.getPermissions().stream())
+                .toList();
     }
 }
