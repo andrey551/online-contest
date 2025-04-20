@@ -1,9 +1,10 @@
-from typing import Optional, List, Union, Dict
+from typing import Optional, List, Dict
+from uuid import UUID
 
 from bson import ObjectId
 from fastapi import Form
 from pydantic import BaseModel, ConfigDict
-from uuid import UUID
+
 
 class Request(BaseModel):
     url: Optional[str]

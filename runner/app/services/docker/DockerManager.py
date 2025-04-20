@@ -3,13 +3,12 @@ import os
 
 import docker
 import grpc
+from app.exception.ImageDockerException import ImageDockerException
+from app.generated import submission_pb2_grpc, submission_pb2
+from app.models.Resource import ContainerResource
+from app.models.Solution import SolutionRequest
 from docker.models.containers import Container
 from google.protobuf.json_format import MessageToDict
-
-from runner.app.exception.ImageDockerException import ImageDockerException
-from runner.app.generated import submission_pb2_grpc, submission_pb2
-from runner.app.models.Resource import ContainerResource
-from runner.app.models.Solution import SolutionRequest
 
 logger = logging.getLogger(__name__)
 

@@ -1,5 +1,7 @@
-from pydantic_settings import BaseSettings
 from typing import ClassVar
+
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Runner"  # Default value for PROJECT_NAME

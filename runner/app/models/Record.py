@@ -1,6 +1,5 @@
+from app.schemas.enums.Status import Status
 from pydantic import BaseModel
-
-from runner.app.schemas.enums.Status import Status
 
 
 class Record(BaseModel):

@@ -1,8 +1,6 @@
-from docker.models.containers import Container
+from app.schemas.enums.Status import Status
+from app.schemas.responses.ResponseModel import BaseResponse
 from requests import Response
-
-from runner.app.schemas.enums.Status import Status
-from runner.app.schemas.responses.ResponseModel import BaseResponse
 
 
 def check(response: Response, answer: BaseResponse) -> Status | None:

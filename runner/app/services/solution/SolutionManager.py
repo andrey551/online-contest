@@ -1,15 +1,12 @@
 import logging
 from datetime import datetime
 
+from app.db.Database import solution_collection
+from app.models.Solution import SolutionRequest, to_solution
+from app.services.docker.DockerRunner import runner
+from app.services.resource.ResourceService import get_resource_by_problem_id
 from bson import ObjectId
 from fastapi import HTTPException
-
-from runner.app.db.Database import solution_collection
-from runner.app.models.Solution import SolutionRequest, to_solution
-from starlette.responses import JSONResponse
-
-from runner.app.services.resource.ResourceService import get_resource_by_problem_id
-from runner.app.services.docker.DockerRunner import runner
 
 logger = logging.getLogger(__name__)
 

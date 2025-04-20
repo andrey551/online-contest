@@ -1,13 +1,10 @@
 import logging
 
-import requests
-
-from runner.app.models.Record import Record
-from runner.app.models.TestSet import Request
-from runner.app.services.docker.DockerManager import docker_container
-from runner.app.services.solution.SolutionManager import get_solution
-from runner.app.services.test.TestManager import TestManager
-from runner.app.services.test.TestService import retrieve_test_by_problem_id
+from app.models.Record import Record
+from app.services.docker.DockerManager import docker_container
+from app.services.solution.SolutionManager import get_solution
+from app.services.test.TestManager import TestManager
+from app.services.test.TestService import retrieve_test_by_problem_id
 
 logger = logging.getLogger(__name__)
 

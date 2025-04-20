@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: fastapi_grpc_app
+    ports:
+      - "8084:8000"    # FastAPI
+      - "9091:9091"    # gRPC
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+    networks:
+      - backend
+
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0-ubi9
+    container_name: mongo_server
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

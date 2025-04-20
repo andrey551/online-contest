@@ -1,11 +1,5 @@
-import logging
-from uuid import UUID
-
+from app.services.resource.ResourceService import *
 from fastapi import APIRouter
-
-from runner.app.models.Resource import Resource
-from runner.app.services.resource.ResourceService import insert_resource, impl_resource, update_resource, delete_resource, \
-    get_resource
 
 resource_router = APIRouter()
 logger = logging.getLogger(__name__)

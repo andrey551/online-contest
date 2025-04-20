@@ -1,9 +1,9 @@
 import logging
 
-from runner.app.models.Resource import ContainerResource
-from runner.app.models.Solution import SolutionRequest
-from runner.app.services.docker.DockerManager import DockerManager
-from runner.app.utils.FileManager import extract
+from app.models.Resource import ContainerResource
+from app.models.Solution import SolutionRequest
+from app.services.docker.DockerManager import DockerManager
+from app.utils.FileManager import extract
 
 logger = logging.getLogger(__name__)
 

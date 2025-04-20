@@ -1,8 +1,6 @@
 import logging
-import zipfile
 import os
-
-from pydantic import BaseModel
+import zipfile
 
 logger = logging.getLogger(__name__)
 

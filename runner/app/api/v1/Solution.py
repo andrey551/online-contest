@@ -1,17 +1,13 @@
+import logging
 from datetime import datetime
 from pathlib import Path
 
+from app.models.Solution import SolutionRequest
+from app.services.docker.DockerManager import create_submission
+from app.services.solution.SolutionManager import containerize_solution, update_if_exist_or_create
+from app.services.solution.SolutionRunner import run_and_check_solution
 from fastapi import APIRouter, UploadFile, File, Form
-
 from starlette.responses import JSONResponse
-import logging
-
-from runner.app.models.Solution import SolutionRequest
-from runner.app.schemas.responses.ResponseModel import SendSolutionResponse
-from runner.app.services.docker.DockerManager import create_submission
-from runner.app.services.solution.SolutionManager import containerize_solution, insert_solution, \
-    update_if_exist_or_create
-from runner.app.services.solution.SolutionRunner import run_and_check_solution
 
 logger = logging.getLogger(__name__)
 solution_router = APIRouter()

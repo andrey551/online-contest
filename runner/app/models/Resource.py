@@ -1,8 +1,8 @@
 from typing import Optional, List
+from uuid import UUID
 
 from bson import ObjectId
-from pydantic import BaseModel, Field, ConfigDict, SkipValidation
-from uuid import UUID
+from pydantic import BaseModel, ConfigDict
 
 
 class ContainerResource(BaseModel):

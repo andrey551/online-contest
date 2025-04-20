@@ -1,12 +1,11 @@
 import logging
 
-from runner.app.generated import container_pb2_grpc
-from runner.app.generated.container_pb2_grpc import RunnerServiceServicer
-from runner.app.services.solution.SolutionManager import get_container_id_by_laboratory_id, \
-    get_container_id_by_solution_id
-
-import runner.app.generated.container_pb2 as container_pb2
+from app.generated import container_pb2_grpc
+from app.generated.container_pb2_grpc import RunnerServiceServicer
+from app.services.solution.SolutionManager import get_container_id_by_solution_id
 from grpc import aio
+
+import app.generated.container_pb2 as container_pb2
 
 logger = logging.getLogger(__name__)
 

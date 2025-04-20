@@ -1,8 +1,7 @@
 from typing import Optional, Any
 
+from app.models.Solution import Solution
 from pydantic import BaseModel, ConfigDict
-
-from runner.app.models.Solution import Solution
 
 
 class BaseResponse(BaseModel):

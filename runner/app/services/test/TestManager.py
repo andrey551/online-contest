@@ -3,13 +3,12 @@ import logging
 from datetime import datetime
 
 import requests
+from app.models.Record import Record
+from app.models.TestSet import TestSet, Testcase, Request
+from app.schemas.enums.Status import Status
+from app.services.docker.DockerManager import DockerManager, docker_container
+from app.utils.Checker import check
 from docker.models.containers import Container
-
-from runner.app.models.Record import Record
-from runner.app.models.TestSet import TestSet, Testcase, Request
-from runner.app.schemas.enums.Status import Status
-from runner.app.utils.Checker import check
-from runner.app.services.docker.DockerManager import DockerManager, docker_container
 
 logger = logging.getLogger(__name__)
 

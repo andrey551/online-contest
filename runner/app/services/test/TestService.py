@@ -1,11 +1,9 @@
 from http.client import HTTPException
-
-from bson import ObjectId
 from uuid import UUID
 
-from runner.app.db.Database import test_collection
-from runner.app.models.TestSet import TestSet
-from runner.app.schemas.responses.ResponseModel import BaseResponse
+from app.db.Database import test_collection
+from app.models.TestSet import TestSet
+from app.schemas.responses.ResponseModel import BaseResponse
 
 
 async def import_tests(tests: TestSet):
