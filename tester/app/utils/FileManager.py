@@ -2,8 +2,6 @@ import logging
 import zipfile
 import os
 
-from pydantic import BaseModel
-
 logger = logging.getLogger(__name__)
 
 def extract(zip_path: str, extract_path: str):

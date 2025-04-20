@@ -4,9 +4,9 @@ import logging
 import grpc
 from google.protobuf.json_format import MessageToDict
 
-from tester.app.generated import container_pb2_grpc, container_pb2, submission_pb2_grpc, submission_pb2
-from tester.app.models.Record import Record
-from tester.app.schemas.enums.Status import CustomJSONEncoder
+from app.generated import container_pb2_grpc, container_pb2, submission_pb2_grpc, submission_pb2
+from app.models.Record import Record
+from app.schemas.enums.Status import CustomJSONEncoder
 
 logger = logging.getLogger(__name__)
 async def get_container_id_by_laboratory_id(laboratory_id: str):

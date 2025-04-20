@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from tester.app.schemas.enums.Status import Status
+from app.schemas.enums.Status import Status
 
 
 class Record(BaseModel):

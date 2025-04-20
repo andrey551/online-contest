@@ -3,9 +3,9 @@ from http.client import HTTPException
 from bson import ObjectId
 from uuid import UUID
 
-from tester.app.db.Database import test_collection
-from tester.app.models.TestSet import TestSet
-from tester.app.schemas.responses.ResponseModel import BaseResponse
+from app.db.Database import test_collection
+from app.models.TestSet import TestSet
+from app.schemas.responses.ResponseModel import BaseResponse
 
 
 async def import_tests(tests: TestSet):

@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    container_name: tester_app
+    ports:
+      - "8085:8000"    # FastAPI
+    environment:
+      - MONGO_URI=mongodb://mongo-db:27017
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - online-contest-net
+
+networks:
+  online-contest-net:
+    external: true

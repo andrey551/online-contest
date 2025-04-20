@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+grpcio
+grpcio-tools
+pymongo
+motor
+pydantic-settings
+docker
+python-multipart
+sqlalchemy

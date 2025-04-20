@@ -3,11 +3,11 @@ from uuid import UUID
 
 from fastapi import APIRouter, Form
 
-from tester.app.models.TestSet import TestSet
-from tester.app.schemas.requests.RequestModel import RunTestRequestModel
-from tester.app.services.test.TestManager import TestManager
-from tester.app.services.test.TestService import import_tests, delete_tests
-from tester.app.services.test.gRPCService import get_container_id_by_laboratory_id
+from app.models.TestSet import TestSet
+from app.schemas.requests.RequestModel import RunTestRequestModel
+from app.services.test.TestManager import TestManager
+from app.services.test.TestService import import_tests, delete_tests
+from app.services.test.gRPCService import get_container_id_by_laboratory_id
 
 test_set_router = APIRouter()
 logger = logging.getLogger(__name__)

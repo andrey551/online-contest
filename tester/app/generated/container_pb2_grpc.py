@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import tester.app.generated.container_pb2 as container__pb2
+import app.generated.container_pb2 as container__pb2
 
 GRPC_GENERATED_VERSION = '1.71.0'
 GRPC_VERSION = grpc.__version__
