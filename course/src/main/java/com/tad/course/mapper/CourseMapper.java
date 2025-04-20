@@ -2,11 +2,8 @@ package com.tad.course.mapper;
 
 import com.tad.course.DTOs.raw.RawCourse;
 import com.tad.course.DTOs.request.CourseRequest;
-import com.tad.course.DTOs.response.CourseResponse;
 import com.tad.course.DTOs.wrapper.CoursesWrapper;
 import com.tad.course.entities.Course;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;

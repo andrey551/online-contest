@@ -19,7 +19,7 @@ public class FileTaskGrpcClient {
                               @Value("${grpc.info.port}") int grpcPort ) {
         log.info("grpc info: " + grpcHost + ":" + grpcPort);
         this.channel = ManagedChannelBuilder
-                .forAddress(grpcHost, grpcPort) // server host/port
+                .forAddress(grpcHost, grpcPort)
                 .usePlaintext()
                 .build();
 
