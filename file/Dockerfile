@@ -22,8 +22,8 @@ WORKDIR /app
 COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
 
 # Expose port for gRPC and HTTP
-EXPOSE 8080 8080
-EXPOSE 8086 8086
+EXPOSE 8087 8087
+EXPOSE 9090 9090
 
 # Run Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]

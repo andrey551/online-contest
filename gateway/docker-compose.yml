@@ -1,31 +1,16 @@
-version: '3.9'
-
 services:
-  keycloak:
-    image: keycloak/keycloak:latest
-    container_name: keycloak
-    command: start-dev
-    ports:
-      - "8086:8080"  # Host 8086 -> Container 8080
-    environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/realms/master"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
   gateway:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: gateway
-    depends_on:
-      keycloak:
-        condition: service_healthy
+    build: .
     ports:
-      - "8080:8080"
+      - "8080:8080"   # Spring Boot HTTP
+      - "8086:8086"
+#      - "9090:9090"   # gRPC
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak:8080/realms/myrealm
+      - SPRING_PROFILES_ACTIVE=dev
+      - DOTENV_PATH=.env
+    networks:
+      - online-contest-net
+
+networks:
+  online-contest-net:
+    external: true
