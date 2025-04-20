@@ -2,18 +2,17 @@ import asyncio
 import logging
 from datetime import datetime
 
-import grpc
 import requests
 from docker.models.containers import Container
 
-from tester.app.models.Record import Record
-from tester.app.models.TestSet import Testcase, Request
-from tester.app.generated import container_pb2, container_pb2_grpc
-from tester.app.schemas.enums.Status import Status
-from tester.app.services.test.DockerManager import get_container
-from tester.app.services.test.TestService import retrieve_test_by_problem_id
-from tester.app.utils.Checker import check
-from google.protobuf.json_format import MessageToDict
+from app.models.Record import Record
+from app.models.TestSet import Testcase, Request
+from app.schemas.enums.Status import Status
+from app.schemas.requests.RequestModel import RunTestRequestModel
+from app.services.test.DockerManager import get_container
+from app.services.test.TestService import retrieve_test_by_problem_id
+from app.services.test.gRPCService import get_container_id_by_solution_id, send_result_to_submission_service
+from app.utils.Checker import check
 
 logger = logging.getLogger(__name__)
 
@@ -35,16 +34,16 @@ class TestManager:
         return status
 
     # Release report
-    async def get_report(self, laboratory_id: str) -> Record | None:
+    async def get_report(self, request: RunTestRequestModel) -> Record | None:
         try:
-            container_id = await get_container_id_by_laboratory_id(laboratory_id)
+            container_id = await get_container_id_by_solution_id(request.solution_id)
             if container_id is None:
-                raise Exception(f"No container with id {laboratory_id} found")
+                raise Exception(f"No container with id {request.solution_id} found")
 
-            tests = await retrieve_test_by_problem_id(laboratory_id)
+            tests = await retrieve_test_by_problem_id(request.laboratory_id)
 
             if tests is None:
-                raise Exception(f"No test with id {laboratory_id} found")
+                raise Exception(f"No test with id {request.laboratory_id} found")
 
             report = Record(
                 total= len(tests["data"]),
@@ -75,6 +74,7 @@ class TestManager:
             task.cancel()
             logger.info(report)
 
+            await send_result_to_submission_service(report, request.submission_id)
             return report
         except Exception as e:
             logger.error(e)
@@ -86,7 +86,7 @@ class TestManager:
                 memory_stats = container.stats(stream=False)
                 usage = memory_stats.get("memory_stats", {}).get("usage")
                 if usage is not None:
-                    report.memory_used.append(usage)
+                    report.memory_used.append(usage/1024**2)
                     logger.info(f"Memory usage: {usage}")
                 else:
                     logger.info("usage stat not found in memory_stats")
@@ -118,12 +118,5 @@ async def send_request(request: Request):
 
     return response
 
-async def get_container_id_by_laboratory_id(laboratoryId: str):
-    try:
-        with grpc.insecure_channel("localhost:50051") as channel:
-            stub = container_pb2_grpc.RunnerServiceStub(channel)
-            response = stub.getContainerId(container_pb2.getContainerIdRequest(laboratoryId=laboratoryId))
-            logger.info(f"Response: {response}")
-        return MessageToDict(response)
-    except Exception as e:
-        raise RuntimeError(e)
+
+

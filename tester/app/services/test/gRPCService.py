@@ -31,7 +31,7 @@ async def get_container_id_by_solution_id(solution_id: str):
 
 async def send_result_to_submission_service(result: Record, submission_id: str):
     try:
-        with grpc.insecure_channel("localhost:9090") as channel:
+        with grpc.insecure_channel("localhost:9093") as channel:
             stub = submission_pb2_grpc.SubmissionTaskServiceStub(channel)
             response = stub.HandleSubmissionTask(submission_pb2.SubmissionTaskRequest(task_type = str("UPDATE_RESULT"),
                                                  submission_id = submission_id,
