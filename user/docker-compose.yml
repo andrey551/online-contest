@@ -1,0 +1,15 @@
+services:
+  user-service:
+    build: .
+    ports:
+      - "8081:8081"   # Spring Boot HTTP
+#      - "9090:9090"   # gRPC
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - DOTENV_PATH=.env
+    networks:
+      - online-contest-net
+
+networks:
+  online-contest-net:
+    external: true
