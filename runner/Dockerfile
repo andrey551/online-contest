@@ -1,24 +1,23 @@
 # Base image
 FROM python:latest
 
-# Tạo thư mục làm việc
+# Set working directory
 WORKDIR /app
 
-# Copy dependencies trước (tận dụng cache)
+# Copy dependencies first to leverage caching
 COPY requirements.txt .
 
-# Cài đặt các dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONPATH=/app
 
-# Copy toàn bộ mã nguồn
+# Copy the rest of the source code
 COPY . .
 
-# Mở cổng cho FastAPI (8000) và gRPC (9191)
+# Expose ports for FastAPI (8000) and gRPC (9191)
 EXPOSE 8000
 EXPOSE 9191
 
-# Chạy ứng dụng (FastAPI + gRPC)
-CMD ["python", "main.py"]
-
+# Start the FastAPI app using uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

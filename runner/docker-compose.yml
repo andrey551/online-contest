@@ -11,21 +11,12 @@ services:
     ports:
       - "8084:8000"    # FastAPI
       - "9091:9091"    # gRPC
-    depends_on:
-      - mongodb
     environment:
-      - MONGO_URI=mongodb://mongodb:27017
+      - MONGO_URI=mongodb://mongo-db:27017
+      - DOCKER_HOST=unix:///var/run/docker.sock
     networks:
-      - backend
-
-  mongodb:
-    image: mongodb/mongodb-community-server:7.0-ubi9
-    container_name: mongo_server
-    ports:
-      - "27017:27017"
-    networks:
-      - backend
+      - online-contest-net
 
 networks:
-  backend:
-    driver: bridge
+  online-contest-net:
+    external: true
