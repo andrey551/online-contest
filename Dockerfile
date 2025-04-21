@@ -1,4 +1,10 @@
-FROM ubuntu:latest
-LABEL authors="Never"
+# postgres.Dockerfile
+FROM postgres:latest
 
-ENTRYPOINT ["top", "-b"]
+# Thiết lập biến môi trường cho user, password và db
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=05052001
+ENV POSTGRES_DB=contest
+
+# Cổng mặc định
+EXPOSE 5432
