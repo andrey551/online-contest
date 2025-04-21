@@ -6,7 +6,6 @@ FROM gradle:jdk17-corretto AS builder
 COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 
-# Bỏ xài ~/.gradle cache
 ENV GRADLE_USER_HOME=/build/.gradle
 
 # Build the Spring Boot app with gRPC
@@ -23,7 +22,7 @@ COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
 
 # Expose port for gRPC and HTTP
 EXPOSE 8080 8080
-EXPOSE 8086 8086
+#EXPOSE 8086 8086
 
 # Run Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
