@@ -1,39 +1,82 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: gateway
   cloud:
     gateway:
       routes:
-        id: frontend-service
-        uri: http://localhost:3000
-        predicates:
-          - Path=/api/user/**
-        filters:
-          - StripPrefix=2
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/v1/user/**
+          filters:
+            - StripPrefix=2
 
+        - id: course-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/course/**
+          filters:
+            - StripPrefix=2
+
+        - id: course-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/v1/laboratory/**
+          filters:
+            - StripPrefix=2
+
+        - id: submission-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/v1/submission/**
+          filters:
+            - StripPrefix=2
+
+        - id: docker-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v1/solution/**
+          filters:
+            - StripPrefix=2
+
+        - id: docker-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/v1/resources/**
+          filters:
+            - StripPrefix=2
+
+        - id: tester-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/v1/test-set/**
+          filters:
+            - StripPrefix=2
   security:
     user:
       name: user
       password: password
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8080/realms/contest
-      client:
-        registration:
-          keycloak:
-            client-id: contest-client
-            client-secret: qQHKAG4F4GNLHDbgFqUcyQC3najiMx7t
-            authorization-grant-type: authorization_code
-            redirect-uri: {baseUrl}/login/oauth2/code/{registrationId}
-            scope: openid
-            provider: keycloak
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8080/realms/contest
-            authorization-uri: http://localhost:8080/realms/contest/protocol/openid-connect/auth
-            token-uri: http://localhost:8080/realms/contest/protocol/openid-connect/token
-            user-info-uri: http://localhost:8080/realms/contest/protocol/openid-connect/userinfo
-            jwk-set-uri: http://localhost:8080/realms/contest/protocol/openid-connect/certs
-server:
-  port: 8084
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://keycloak:8080/realms/contest
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: contest-client
+#            client-secret: FXLB3y81i1h8HyEabJmkC4V1QefXYKYb
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            scope: openid
+#            provider: keycloak
+#        provider:
+#          keycloak:
+#            issuer-uri: http://keycloak:8080/realms/contest
+#            authorization-uri: http://keycloak:8080/realms/contest/protocol/openid-connect/auth
+#            token-uri: http://keycloak:8080/realms/contest/protocol/openid-connect/token
+#            user-info-uri: http://keycloak:8080/realms/contest/protocol/openid-connect/userinfo
+#            jwk-set-uri: http://keycloak:8080/realms/contest/protocol/openid-connect/certs
+
