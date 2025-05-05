@@ -114,16 +114,16 @@ public class CourseService {
             course.setTeacherName(teacherName);
             course.setTeacherId(teacherId);
 
-            File.FileTaskResponse response = client.sendFileTask(ByteString.EMPTY.toByteArray(),
-                                                                "",
-                                                                CREATE_DIR_MODE,
-                                                                course.getTitle());
-
-            if(response.getSuccess()) {
-                course.setDirectory(response.getMessage());
-            } else {
-                log.info("Can't create dir on cloud");
-            }
+//            File.FileTaskResponse response = client.sendFileTask(ByteString.EMPTY.toByteArray(),
+//                                                                "",
+//                                                                CREATE_DIR_MODE,
+//                                                                course.getTitle());
+//
+//            if(response.getSuccess()) {
+//                course.setDirectory(response.getMessage());
+//            } else {
+//                log.info("Can't create dir on cloud");
+//            }
 
             Course courseSaved = courseRepository.save(course);
 
