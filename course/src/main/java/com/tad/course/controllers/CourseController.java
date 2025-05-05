@@ -16,6 +16,7 @@ import static com.tad.course.mapper.HttpResponseMapper.toHttpResponse;
 
 @RestController
 @RequestMapping("api/v1/courses")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CourseController {
     @Autowired
     private CourseService courseService;
