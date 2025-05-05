@@ -14,6 +14,7 @@ import static com.tad.course.mapper.LaboratoryMapper.toHttpResponse;
 
 @RestController
 @RequestMapping("/api/v1/laboratories")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LaboratoryController {
 
     @Autowired
