@@ -5,5 +5,5 @@ import com.tad.course.DTOs.raw.RawLaboratory;
 import java.util.List;
 
 public record LaboratoriesWrapper(
-        List<RawLaboratory> repositories
+        List<RawLaboratory> laboratories
 ) {}
