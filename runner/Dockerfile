@@ -17,7 +17,7 @@ COPY . .
 
 # Expose ports for FastAPI (8000) and gRPC (9191)
 EXPOSE 8000
-EXPOSE 9191
+EXPOSE 50051
 
 # Start the FastAPI app using uvicorn
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

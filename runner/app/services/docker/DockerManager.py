@@ -17,18 +17,35 @@ class DockerManager:
         self.client = docker.from_env()
 
     """ Check if image is existed, if not, pull it """
-    async def add_image(self, image: str):
+
+    async def add_image(self, image: str ):
         try:
-            if image in self.client.images.list():
-                logger.info("Image already exists")
-            else:
-                image = self.client.images.pull(image)
-                logger.info( f"Pulling {image}")
-                if image is None:
-                    raise ImageDockerException("Can't pull image")
-                logger.info( f"{image} has been pulled!")
+            # Check if image exists locally (case-insensitive)
+            existing_images = [img.tags[0].lower() for img in self.client.images.list() if img.tags]
+            if any(image.lower() in img for img in existing_images):
+                logger.info(f"Image {image} already exists")
+                return True
+
+            # Pull with progress tracking
+            logger.info(f"Pulling image {image}...")
+            pull_log = self.client.api.pull(image, stream=True, decode=True)
+
+            # Monitor pull progress
+            for log in pull_log:
+                if 'status' in log:
+                    logger.debug(f"Docker: {log['status']}")
+                if 'error' in log:
+                    raise ImageDockerException(f"Pull failed: {log['error']}")
+
+            logger.info(f"Successfully pulled {image}")
+            return True
+
+        except docker.errors.APIError as api_err:
+            logger.error(f"Docker API error: {api_err}")
+            raise ImageDockerException(f"API error pulling {image}")
         except Exception as e:
-            logger.error(e)
+            logger.error(f"Unexpected error: {str(e)}")
+            raise ImageDockerException(f"Failed to add image: {str(e)}")
 
     """ Remove image """
     def remove_image(self, image: str):
@@ -61,13 +78,28 @@ class DockerManager:
         try:
             if not self.is_image_exists(resource["image_name"]):
                 await self.add_image(resource["image_name"])
-            return self.client.containers.create(image = resource["image_name"],
-                                                 detach=True,
-                                                 command = resource["command"],
-                                                 volumes={os.path.abspath(f'{solution.crt_dir}/{solution.extract_path}/{solution.file_name.rstrip('.zip')}/'): {'bind':'/app', 'mode': 'rw'}},
-                                                 working_dir="/app",
-                                                 ports = {"80/tcp": solution.port},
-                                                 user = resource["user"])
+            # return self.client.containers.create(image = resource["image_name"],
+            #                                      detach=True,
+            #                                      command = resource["command"],
+            #                                      volumes={os.path.abspath(f'{solution.extract_path}/{solution.file_name.rstrip('.zip')}/'): {'bind':'/app', 'mode': 'rw'}},
+            #                                      working_dir="/app",
+            #                                      ports = {"80/tcp": solution.port},
+            #                                      user = resource["user"])
+            return self.client.containers.create(
+                                                image=resource["image_name"],
+                                                detach=True,
+                                                command=resource["command"],
+                                                volumes={
+                                                    'runner_shared_volume': {
+                                                        'bind': '/app',
+                                                        'mode': 'rw'
+                                                    },
+                                                },
+                                                working_dir=f'/app/{solution.file_name.rstrip('.zip')}',
+                                                ports={"80/tcp": solution.port},
+                                                user=resource["user"],
+                                                network="online-contest-net"  # Same network as FastAPI container
+                                            )
         except Exception as e:
             logger.error(e)
             return None

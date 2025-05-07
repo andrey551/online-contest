@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Runner"  # Default value for PROJECT_NAME
-    ENGINE: str = "mongodb://localhost:27017"  # Default value for ENGINE
+    ENGINE: str = "mongodb://mongo-db:27017"  # Default value for ENGINE
     ZIP_DIR: str = "/zip"
     EXTRACT_DIR: str = "/extract"
 

@@ -27,13 +27,13 @@ Return:
 """
 
 @solution_router.post("/api/v1/solution")
-async def submit_solution(problem_id: str = Form(...),
+async def submit_solution(laboratory_id: str = Form(...),
                           author_id: str = Form(...),
                           file: UploadFile = File(...)):
 
     try:
         current_dir = Path(__file__).parent.parent.parent.parent.resolve()
-        solution_request = SolutionRequest(problem_id=problem_id,
+        solution_request = SolutionRequest(laboratory_id=laboratory_id,
                                             author_id=author_id,
                                             file_name=file.filename,
                                            crt_dir=str(current_dir).strip("/\\"),
@@ -58,7 +58,7 @@ async def submit_solution(problem_id: str = Form(...),
         container_id = await containerize_solution(solution_request)
         logger.info(f"Container ID: {container_id}")
         solution = await update_if_exist_or_create(solution_request, str(container_id))
-        submission_id = await create_submission(user_id=author_id,laboratory_id=problem_id)
+        submission_id = await create_submission(user_id=author_id,laboratory_id=laboratory_id)
 
         return JSONResponse(
             status_code=200,

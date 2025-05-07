@@ -13,5 +13,5 @@ class ContainerResource(BaseModel):
 class Resource(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)  # Allow arbitrary types
     _id: Optional[ObjectId] = None
-    problem_id: UUID
+    laboratory_id: UUID
     list_images: List[ContainerResource]
