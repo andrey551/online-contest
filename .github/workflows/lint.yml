@@ -15,20 +15,26 @@ jobs:
       - name: Install flake8
         run: pip install flake8
       - name: Run flake8
-        run: flake8 python-project/ --max-line-length=88
+        run: |
+          flake8 runner/ --max-line-length=88
+          flake8 tester/ --max-line-length=88
 
   lint-java:
     runs-on: ubuntu-latest
-    name: Lint Java code
+    name: Lint Java directories
+    strategy:
+      matrix:
+        dir: [course, file, gateway, submission, user]
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Maven (runs checkstyle)
-        working-directory: java-project
-        run: |
-          mvn clean verify
+      - name: Run Maven Checkstyle
+        working-directory: ${{ matrix.dir }}
+        run: mvn clean verify
