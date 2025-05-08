@@ -35,6 +35,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Run Maven Checkstyle
+      - name: Grant execute permission to Gradle wrapper
         working-directory: ${{ matrix.dir }}
-        run: mvn clean verify
+        run: chmod +x ./gradlew
+
+      - name: Run Gradle check (includes lint, tests, etc.)
+        working-directory: ${{ matrix.dir }}
+        run: ./gradlew check
