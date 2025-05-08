@@ -113,7 +113,7 @@ class DockerManager:
             logger.error(e)
 async def create_submission(user_id: str, laboratory_id: str):
     try:
-        with grpc.insecure_channel('localhost:9093') as channel:
+        with grpc.insecure_channel('submission-submission-service-1:9093') as channel:
             stub = submission_pb2_grpc.SubmissionTaskServiceStub(channel)
             response = stub.HandleCreateSubmission(submission_pb2.CreateSubmissionRequest(user_id = user_id, laboratory_id = laboratory_id))
             logger.info(f"Submission response: {response}")
