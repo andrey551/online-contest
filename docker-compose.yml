@@ -18,19 +18,17 @@ services:
     restart: unless-stopped
 
   mongodb:
-    image: mongodb/mongodb-community-server:7.0-ubi9
-    container_name: mongo-db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root  # username root
-      MONGO_INITDB_ROOT_PASSWORD: example  # password root
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db  # Volume for MongoDB data
-      - ./mongo-init:/docker-entrypoint-initdb.d  # Directory init script
-    networks:
-      - online-contest-net
-    restart: unless-stopped
+      image: mongodb/mongodb-community-server:7.0-ubi9
+      container_name: mongo-db
+      ports:
+        - "27017:27017"
+      volumes:
+        - mongodb-data:/data/db
+        - ./mongo-init:/docker-entrypoint-initdb.d  # Optional initialization scripts
+      networks:
+        - online-contest-net
+      restart: unless-stopped
+      command: mongod --noauth
 
 volumes:
   postgres-data:  # Volume for PostgreSQL

@@ -1,14 +1,45 @@
+version: '3.8'
+
 services:
   gateway:
     build: .
     ports:
-      - "8080:8080"   # Spring Boot HTTP
+      - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
-      - DOTENV_PATH=.env
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=vNGggqSKmFqmkq9RsOQ4hn3tSkQIPhnl
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://keycloak:8080/realms/contest
+#      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=http://localhost:8086/realms/contest
+#      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_TOKEN_URI=http://keycloak:8080/realms/contest/protocol/openid-connect/token
+    depends_on:
+      keycloak:
+        condition: service_healthy
     networks:
       - online-contest-net
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.1
+    ports:
+      - "8086:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
+    volumes:
+      - ./import:/opt/keycloak/data/import
+    command: start-dev --import-realm
+    networks:
+      - online-contest-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health/ready"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 networks:
   online-contest-net:
     external: true
+    name: online-contest-net
