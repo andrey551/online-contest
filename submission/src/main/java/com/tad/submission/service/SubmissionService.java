@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,6 +70,8 @@ public class SubmissionService {
         }
     }
 
+
+
     public GetSubmissionsResponse getSubmissions(UUID studentId, UUID laboratoryId) {
         try {
             List<ShortenSubmissionRaw> raw = submissionRepository.getShortenedSubmissions(studentId, laboratoryId)
@@ -109,6 +112,14 @@ public class SubmissionService {
             submission.setResult(updateResultRequest.result());
             submission.setTotalTests(updateResultRequest.result().getTotal());
             submission.setTotalPassedTests(updateResultRequest.result().getPassed());
+
+            submission.defineState();
+
+            // Validate the state is one of our enum values
+            if (!Arrays.asList(SubmissionState.values()).contains(submission.getState())) {
+                throw new IllegalStateException("Invalid submission state: " + submission.getState());
+            }
+
             submissionRepository.save(submission);
 
             return TransactionStatus.SUCCESS;

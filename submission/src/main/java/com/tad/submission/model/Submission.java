@@ -51,4 +51,35 @@ public class Submission implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "state")
     SubmissionState state;
+
+    public void defineState() {
+        if (result == null || result.getStatus_list() == null) {
+            this.state = SubmissionState.WAITING;
+            return;
+        }
+
+        // Handle empty status list
+        if (result.getStatus_list().isEmpty()) {
+            this.state = SubmissionState.RUNNING;
+            return;
+        }
+
+        // Check for specific status conditions
+        if (result.getStatus_list().contains("failed")) {
+            this.state = SubmissionState.WRONG_ANSWER;
+        }
+        else if (result.getStatus_list().contains("memory_exceeded")) {
+            this.state = SubmissionState.MEMORY_LIMIT_EXCEEDED;
+        }
+        else if (result.getStatus_list().contains("timed_out")) {
+            this.state = SubmissionState.TIME_LIMIT_EXCEEDED;
+        }
+        else if (result.getStatus_list().stream().allMatch("passed"::equals)) {
+            this.state = SubmissionState.ACCEPTED;
+        }
+        else {
+            // If none of the above, but we have some statuses
+            this.state = SubmissionState.RUNNING;
+        }
+    }
 }

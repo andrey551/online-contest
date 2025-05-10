@@ -40,6 +40,7 @@ public class SubmissionTaskService
             }
             case UPDATE_RESULT -> {
                 TestResult testResult = new TestResultConverter().convertToEntityAttribute(data);
+
                 UpdateResultRequest updateResultRequest = new UpdateResultRequest(submissionId, testResult);
                 status = submissionService.updateResult(updateResultRequest);
                 log.info(status.toString());
