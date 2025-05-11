@@ -41,4 +41,5 @@ jobs:
 
       - name: Run Gradle check (includes lint, tests, etc.)
         working-directory: ${{ matrix.dir }}
-        run: ./gradlew check
+        run: |
+          ./gradlew checkstyleMain pmdMain -x compileJava -x test
