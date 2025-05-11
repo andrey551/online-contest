@@ -1,0 +1,56 @@
+/* Header Container */
+.header-container {
+    display: flex;
+    height: 4em;
+    width: 100%;
+    background-color: #4c6ef5; /* Using your blue color scheme */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo Section */
+.logo-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.logo {
+    height: 2.5em;
+    object-fit: contain;
+}
+
+/* Menu Section */
+.menu {
+    display: flex;
+    gap: 1.5em;
+    height: 100%;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0 0.5em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item-icon {
+    height: 1.5em;
+    width: 1.5em;
+    object-fit: contain;
+}
+
+.menu-item-text {
+    color: white;
+    font-size: 0.9em;
+    font-weight: 500;
+}

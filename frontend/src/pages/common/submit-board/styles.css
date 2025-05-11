@@ -1,0 +1,4 @@
+.submit-board-container {
+    display: flex;
+    flex-direction: row;
+}

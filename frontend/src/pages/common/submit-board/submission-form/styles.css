@@ -1,0 +1,302 @@
+.submission-container {
+    display: flex;
+    width: 40em;
+    margin-left: 2.5em;
+    flex-direction: column;
+    height: 100vh;
+    padding: 16px;
+    gap: 16px;
+    background-color: #f9fafb;
+}
+
+.submission-details {
+    font-size: 12px;
+    line-height: 1.2;
+    color: #333;
+    flex: 1;
+    width: 100%;
+    max-height: 75%;
+    overflow: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 16px;
+}
+
+.details-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.details-header {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+/* Update the stat box styles */
+.stats-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.stat-box {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.stat-label {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 11px;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chart-container {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+}
+
+.chart-title {
+    font-weight: 600;
+    color: #333333;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.test-results {
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results-title {
+    font-weight: 600;
+    color: #333333;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.results-table-container {
+    overflow-x: auto;
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.results-table th,
+.results-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.results-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.download-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.submit-btn {
+    background-color: #4c6ef5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #3b5bdb;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+}
+
+.empty-icon {
+    font-size: 2em;
+    margin-bottom: 8px;
+}
+
+.empty-text {
+    font-size: 12px;
+}
+
+.submission-list {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 25%;
+    overflow-y: auto;
+}
+
+.list-header {
+    font-weight: 600;
+    color: #333333;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.list-table-container {
+    overflow-x: auto;
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.list-table th,
+.list-table td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.list-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.list-table tr {
+    cursor: pointer;
+}
+
+.list-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.list-table tr.selected {
+    background-color: #e3f2fd;
+}
+
+.file-btn {
+    background-color: #4c6ef5;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.file-btn:hover {
+    background-color: #3b5bdb;
+}
+
+.no-submissions {
+    color: #666;
+    text-align: center;
+    font-size: 12px;
+    padding: 8px;
+}
+
+.view-btn {
+    background-color: #4c6ef5;
+    color: white;
+    border: none;
+    padding: 4px 8px;  /* Giảm padding */
+    font-size: 11px;   /* Giảm kích thước chữ */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 24px;      /* Chiều cao cố định */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Hiệu ứng hover */
+.view-btn:hover {
+    background-color: #3b5bdb;
+    transform: translateY(-1px);
+}
+
+/* Hiệu ứng active */
+.view-btn:active {
+    transform: translateY(0);
+}
+
+.download-btn {
+    background-color: #4c6ef5;
+    color: white;
+    border: none;
+    padding: 6px 12px; /* Giảm padding */
+    font-size: 12px;   /* Giảm kích thước chữ */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 28px;      /* Chiều cao cố định */
+}
+
+
+/* Đảm bảo các button có kích thước đồng nhất */
+.download-btn{
+    min-width: 60px;
+    box-sizing: border-box;
+}
+
+/* Hiệu ứng hover */
+.download-btn:hover {
+    background-color: #3b5bdb;
+    transform: translateY(-1px);
+}
+
+/* Hiệu ứng active */
+.download-btn:active{
+    transform: translateY(0);
+}

@@ -1,0 +1,12 @@
+services:
+  react-app:
+    build: .
+    ports:
+      - "3000:80"
+    networks:
+      - online-contest-net
+    restart: unless-stopped
+
+networks:
+  online-contest-net:
+    name: online-contest-net

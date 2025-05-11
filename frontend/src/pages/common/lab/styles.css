@@ -1,0 +1,254 @@
+/* Vibrant LaboratoriesPage.css */
+.laboratories-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(to bottom, #f9f7ff, #eef2ff);
+}
+
+/* Course Header Styles */
+.course-header {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.course-title {
+    font-size: 2rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.course-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1rem;
+}
+
+.course-teacher {
+    display: flex;
+    align-items: center;
+}
+
+.course-teacher::before {
+    content: "👨‍🏫";
+    margin-right: 0.5rem;
+}
+
+.course-semester {
+    display: flex;
+    align-items: center;
+}
+
+.course-semester::before {
+    content: "📅";
+    margin-right: 0.5rem;
+}
+
+/* Labs Container */
+.labs-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.labs-title {
+    font-size: 1.5rem;
+    color: #4f46e5;
+    padding: 1.25rem 2rem;
+    margin: 0;
+    background-color: #e0e7ff;
+    border-bottom: 2px solid #c7d2fe;
+}
+
+/* Lab Item Styles */
+.labs-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.lab-item {
+    padding: 1.25rem 2rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 4px solid #8b5cf6;
+}
+
+.lab-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #ec4899;
+}
+
+.lab-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lab-main-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.lab-name {
+    justify-self: flex-start !important;
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0 !important;
+    font-weight: 600;
+}
+.lab-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.lab-tag {
+    background: linear-gradient(135deg, #a5b4fc, #818cf8);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.lab-secondary-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: 1rem;
+}
+
+.lab-deadline {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ef4444;
+    white-space: nowrap;
+    background: #fee2e2;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+}
+
+.detail-button {
+    background: linear-gradient(135deg, #f472b6, #ec4899);
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(236, 72, 153, 0.3);
+}
+
+.arrow-icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid white;
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon.expanded {
+    transform: rotate(90deg);
+}
+
+/* Lab Details */
+.lab-details {
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    border-top: 2px dashed #ddd6fe;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.lab-description {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+}
+
+.lab-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.action-button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-button.materials {
+    background: linear-gradient(135deg, #a5b4fc, #6366f1);
+    color: white;
+}
+
+.action-button.submit {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: white;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .laboratories-page {
+        padding: 1.5rem;
+    }
+
+    .lab-item {
+        padding: 1.25rem;
+    }
+
+    .lab-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .lab-secondary-info {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .detail-button {
+        align-self: flex-end;
+    }
+}
