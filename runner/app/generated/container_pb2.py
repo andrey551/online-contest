@@ -32,11 +32,11 @@ _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'container_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-  DESCRIPTOR._loaded_options = None
-  _globals['_GETCONTAINERIDREQUEST']._serialized_start= 19
-  _globals['_GETCONTAINERIDREQUEST']._serialized_end= 84
-  _globals['_GETCONTAINERIDRESPONSE']._serialized_start= 86
-  _globals['_GETCONTAINERIDRESPONSE']._serialized_end= 131
-  _globals['_RUNNERSERVICE']._serialized_start= 133
-  _globals['_RUNNERSERVICE']._serialized_end= 215
+    DESCRIPTOR._loaded_options = None
+    _globals['_GETCONTAINERIDREQUEST']._serialized_start= 19
+    _globals['_GETCONTAINERIDREQUEST']._serialized_end= 84
+    _globals['_GETCONTAINERIDRESPONSE']._serialized_start= 86
+    _globals['_GETCONTAINERIDRESPONSE']._serialized_end= 131
+    _globals['_RUNNERSERVICE']._serialized_start= 133
+    _globals['_RUNNERSERVICE']._serialized_end= 215
 # @@protoc_insertion_point(module_scope)

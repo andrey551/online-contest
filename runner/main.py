@@ -22,6 +22,7 @@ logging.basicConfig(
     ]
 )
 
+
 # Lifespan context manager for managing FastAPI startup and shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):

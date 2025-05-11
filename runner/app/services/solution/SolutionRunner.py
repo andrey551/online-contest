@@ -1,5 +1,4 @@
 import logging
-import socket
 
 from app.models.Record import Record
 from app.services.docker.DockerManager import docker_container

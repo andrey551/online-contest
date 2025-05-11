@@ -31,7 +31,7 @@ class TestManager:
 
     # Release report
     async def get_report(self, tests: TestSet, container_id: str) -> Record | None:
-        report = Record(total= len(tests["data"]), passed= 0, status_list= [])
+        report = Record(total = len(tests["data"]), passed = 0, status_list = [])
         return_ = True
         task = asyncio.create_task(self.tracking_memory(
             container_id,
@@ -44,7 +44,7 @@ class TestManager:
 
             if not return_:
                 report.status_list.append(Status.MEMORY_EXCEEDED)
-            else :
+            else:
                 report.status_list.append(result)
 
             if result == Status.PASSED:
@@ -59,7 +59,7 @@ class TestManager:
                               container: str,
                               interval,
                               memory_limit,
-                              return_= True):
+                              return_ = True):
         memory_usage = 0.0
         try:
             container = docker_container.retrieve_container(container)
@@ -69,17 +69,18 @@ class TestManager:
                     memory_usage = memory_stats["usage"]
 
                 if memory_usage > memory_limit:
-                    return_ =  False
+                    return_ = False
                 await asyncio.sleep(interval)
 
         except Exception as e:
             raise RuntimeError(e)
 
+
 # Send request to solution's endpoint
 async def send_request(request: Request):
     if request["method"] == "GET":
-        response =  requests.get(request["url"],
-                                 headers=request["header"])
+        response = requests.get(request["url"],
+                                headers=request["header"])
     elif request["method"] == "DELETE":
         response = requests.delete(request["url"],
                                    headers=request["header"])

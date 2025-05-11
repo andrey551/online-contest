@@ -20,6 +20,7 @@ async def require_resources(resource: Resource):
         logger.error(e)
         return e
 
+
 @resource_router.put('/api/v1/resources')
 async def update_resources(id: UUID , resource: Resource):
     try:
@@ -27,6 +28,7 @@ async def update_resources(id: UUID , resource: Resource):
         return response
     except Exception as e:
         return e
+
 
 @resource_router.delete('/api/v1/resources/{id}')
 async def delete_resources():
@@ -36,6 +38,7 @@ async def delete_resources():
     except Exception as e:
         return e
 
+
 @resource_router.get('/api/v1/resources/{id}')
 async def get_resources(id: str):
     try:
@@ -44,6 +47,7 @@ async def get_resources(id: str):
         return response.to_dict()
     except Exception as e:
         return e
+
 
 @resource_router.get('/api/v1/resources/run/{id}')
 async def implement_resources(id: str):

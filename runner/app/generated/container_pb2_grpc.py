@@ -84,18 +84,20 @@ class RunnerService(object):
                        wait_for_ready=None,
                        timeout=None,
                        metadata=None):
-        return grpc.experimental.unary_unary(
-                                            request,
-                                            target,
-                                            '/RunnerService/getContainerId',
-                                            container__pb2.getContainerIdRequest.SerializeToString,
-                                            container__pb2.getContainerIdResponse.FromString,
-                                            options,
-                                            channel_credentials,
-                                            insecure,
-                                            call_credentials,
-                                            compression,
-                                            wait_for_ready,
-                                            timeout,
-                                            metadata,
-                                            _registered_method=True)
+        return (grpc
+                .experimental
+                .unary_unary(
+                            request,
+                            target,
+                            '/RunnerService/getContainerId',
+                            container__pb2.getContainerIdRequest.SerializeToString,
+                            container__pb2.getContainerIdResponse.FromString,
+                            options,
+                            channel_credentials,
+                            insecure,
+                            call_credentials,
+                            compression,
+                            wait_for_ready,
+                            timeout,
+                            metadata,
+                            _registered_method=True))

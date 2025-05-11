@@ -12,7 +12,7 @@ def extract(zip_path: str, extract_path: str):
 
 def clean(extract_path: str, name: str):
     try:
-        os.remove(extract_path +"/" + name)
+        os.remove(extract_path + "/" + name)
         logger.info(f"Removed {extract_path}")
     except OSError as e:
         logger.error(e)

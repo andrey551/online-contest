@@ -24,7 +24,9 @@ async def insert_resource(resource: Resource):
 
 async def update_resource(id: UUID, resource: Resource):
     resource_dict = resource.to_dict()
-    resource = await resource_collection.update_one({"_id": id}, {"$set": resource_dict})
+    resource = await resource_collection.update_one(
+                                                    {"_id": id},
+                                                    {"$set": resource_dict})
     if resource.matched_count:
         return HTTPResponse(status_code=200)
     else:
@@ -65,7 +67,7 @@ async def impl_resource(id: str) -> object:
             docker_container = DockerManager()
             try:
                 for container in resource["list_images"]:
-                        await docker_container.add_image(container["image_name"])
+                    await docker_container.add_image(container["image_name"])
                 return {"status": "success"}
             except Exception as e:
                 logger.info(e)

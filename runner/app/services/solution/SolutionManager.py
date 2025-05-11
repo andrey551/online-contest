@@ -16,15 +16,17 @@ async def update_if_exist_or_create(solution_req: SolutionRequest, container_id:
     try:
         solution = to_solution(solution_req, container_id)
 
-        exist_solution = await solution_collection.find_one({
-                                                       "laboratory_id": solution.laboratory_id,
-                                                       "author_id": solution.author_id})
+        exist_solution = await (solution_collection
+                                .find_one({
+                                           "laboratory_id": solution.laboratory_id,
+                                           "author_id": solution.author_id}))
 
         if exist_solution:
             solution_collection.update_one({"_id": ObjectId(exist_solution["_id"])},
-                                           {"$set": {"file_name": solution.file_name,
-                                                     "container_id": solution.container_id,
-                                                     "submit_time": datetime.now()}})
+                                           {"$set":
+                                                {"file_name": solution.file_name,
+                                                 "container_id": solution.container_id,
+                                                 "submit_time": datetime.now()}})
             logger.info(f"Updated {solution.laboratory_id} to {solution.author_id}")
             return str(exist_solution["_id"])
         else:
@@ -39,7 +41,6 @@ async def insert_solution(solution_req: SolutionRequest, container_id: str):
     try:
         solution = to_solution(solution_req, container_id)
 
-
         solution_ret = await solution_collection.insert_one(solution.dict())
 
         if solution_ret.inserted_id:
@@ -47,13 +48,13 @@ async def insert_solution(solution_req: SolutionRequest, container_id: str):
             return str(solution_ret.inserted_id)
 
         else:
-            raise HTTPException(status_code= 404, detail="Solution not found")
+            raise HTTPException(status_code = 404, detail ="Solution not found")
 
     except Exception as e:
         logger.error(e)
 
 
-async def get_solution(solution_id:str):
+async def get_solution(solution_id: str):
     try:
         solution = await solution_collection.find_one({"_id": ObjectId(solution_id)})
         return solution

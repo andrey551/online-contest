@@ -118,19 +118,19 @@ class SubmissionTaskService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method= True)
+            _registered_method=True)
 
     @staticmethod
     def HandleCreateSubmission(request,
-            target,
-            options= (),
-            channel_credentials= None,
-            call_credentials= None,
-            insecure= False,
-            compression= None,
-            wait_for_ready= None,
-            timeout= None,
-            metadata= None):
+                                target,
+                                options=(),
+                                channel_credentials=None,
+                                call_credentials=None,
+                                insecure=False,
+                                compression=None,
+                                wait_for_ready=None,
+                                timeout=None,
+                                metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -145,4 +145,4 @@ class SubmissionTaskService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method= True)
+            _registered_method=True)

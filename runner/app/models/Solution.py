@@ -13,7 +13,7 @@ class SolutionRequest(BaseModel):
     zip_path: str = Field(default='zip')
     extract_path: str = Field(default='extract')
     port: int = Field(default=8080)
-    submit_time: datetime = Field(default_factory=datetime.now)
+    submit_time: datetime = Field(default_factory = datetime.now)
 
 
 class Solution(BaseModel):
@@ -24,13 +24,9 @@ class Solution(BaseModel):
     file_name: str = None
     submit_time: datetime = datetime.now()
 
-# def to_solution(solution_request: SolutionRequest):
-#     return Solution(laboratory_id=solution_request.laboratory_id,
-#                     author_id=solution_request.author_id,
-#                      file_name=solution_request.file_name)
 
 def to_solution(solution_request: SolutionRequest, container_id: str):
-    return Solution(laboratory_id=solution_request.laboratory_id,
-                    author_id=solution_request.author_id,
-                     file_name=solution_request.file_name,
-                    container_id=container_id)
+    return Solution(laboratory_id = solution_request.laboratory_id,
+                    author_id = solution_request.author_id,
+                    file_name = solution_request.file_name,
+                    container_id = container_id)
