@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/course/course.iml" filepath="$PROJECT_DIR$/course/course.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/course.main.iml" filepath="$PROJECT_DIR$/.idea/modules/course.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/file/file.iml" filepath="$PROJECT_DIR$/file/file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/file.main.iml" filepath="$PROJECT_DIR$/.idea/modules/file.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/online-contest.iml" filepath="$PROJECT_DIR$/online-contest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/submission/submission.iml" filepath="$PROJECT_DIR$/submission/submission.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/submission.main.iml" filepath="$PROJECT_DIR$/.idea/modules/submission.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user/user.iml" filepath="$PROJECT_DIR$/user/user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user.main.iml" />
+    </modules>
+  </component>
+</project>

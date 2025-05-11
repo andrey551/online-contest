@@ -1,5 +1,0 @@
-ERROR:root:404 Client Error for http+docker://localnpipe/v1.44/images/create?tag=latest&fromImage=23-alpine3.20: Not Found ("pull access denied for 23-alpine3.20, repository does not exist or may require 'docker login': denied: requested access to the resource is denied")
-ERROR:root:404 Client Error for http+docker://localnpipe/v1.44/images/create?tag=latest&fromImage=23-alpine3.20: Not Found ("pull access denied for 23-alpine3.20, repository does not exist or may require 'docker login': denied: requested access to the resource is denied")
-ERROR:root:argument of type 'ImageCollection' is not iterable
-ERROR:root:404 Client Error for http+docker://localnpipe/v1.44/containers/node:slim/json: Not Found ("No such container: node:slim")
-ERROR:root:404 Client Error for http+docker://localnpipe/v1.44/containers/node:slim/json: Not Found ("No such container: node:slim")

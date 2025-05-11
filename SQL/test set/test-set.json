@@ -1,0 +1,691 @@
+{
+  "laboratory_id": "ff22742e-582a-46c7-a8ca-33cb3db16db8",
+  "data": [
+    {
+      "request": {
+        "url": "https://api.example.com/login",
+        "method": "POST",
+        "header": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"username\": \"test_user\", \"password\": \"validPass123\"}"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {
+          "Authorization": "Bearer abc123"
+        },
+        "body": "{\"token\": \"xyz456\", \"user_id\": 123}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/login",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"username\": \"wrong_user\", \"password\": \"wrongPass\"}"
+      },
+      "response": {
+        "status_code": 401,
+        "header": {},
+        "body": "{\"error\": \"Invalid credentials\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/users/123",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"id\": 123, \"name\": \"Test User\", \"email\": \"test@example.com\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/users/123",
+        "method": "GET",
+        "header": {"Authorization": "Bearer invalidToken"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 403,
+        "header": {},
+        "body": "{\"error\": \"Forbidden\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "POST",
+        "header": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "{\"name\": \"New Resource\", \"type\": \"document\"}"
+      },
+      "response": {
+        "status_code": 201,
+        "header": {"Location": "/resources/789"},
+        "body": "{\"id\": 789, \"name\": \"New Resource\", \"status\": \"created\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "POST",
+        "header": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "{\"type\": \"document\"}"
+      },
+      "response": {
+        "status_code": 400,
+        "header": {},
+        "body": "{\"error\": \"Missing required field: name\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources/789",
+        "method": "PUT",
+        "header": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "{\"name\": \"Updated Resource\"}"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {},
+        "body": "{\"id\": 789, \"name\": \"Updated Resource\", \"status\": \"updated\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources/789",
+        "method": "DELETE",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 204,
+        "header": {},
+        "body": ""
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources/999",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 404,
+        "header": {},
+        "body": "{\"error\": \"Resource not found\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"resources\": [{\"id\": 1, \"name\": \"Resource 1\"}, {\"id\": 2, \"name\": \"Resource 2\"}]}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources?page=2&limit=10",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"resources\": [], \"page\": 2, \"total_pages\": 3}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources?type=document",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"resources\": [{\"id\": 1, \"name\": \"Doc 1\", \"type\": \"document\"}]}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "POST",
+        "header": {
+          "Content-Type": "text/plain",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "Just some text"
+      },
+      "response": {
+        "status_code": 415,
+        "header": {},
+        "body": "{\"error\": \"Unsupported Media Type\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 429,
+        "header": {"Retry-After": "60"},
+        "body": "{\"error\": \"Too many requests\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/login",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 400,
+        "header": {},
+        "body": "{\"error\": \"Request body is required\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/login",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{invalid json}"
+      },
+      "response": {
+        "status_code": 400,
+        "header": {},
+        "body": "{\"error\": \"Invalid JSON format\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/logout",
+        "method": "POST",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {},
+        "body": "{\"message\": \"Successfully logged out\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/health",
+        "method": "GET",
+        "header": {},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"status\": \"healthy\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/error-endpoint",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 500,
+        "header": {},
+        "body": "{\"error\": \"Internal server error\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "OPTIONS",
+        "header": {
+          "Origin": "https://example.com",
+          "Access-Control-Request-Method": "GET"
+        },
+        "body": ""
+      },
+      "response": {
+        "status_code": 204,
+        "header": {
+          "Access-Control-Allow-Origin": "https://example.com",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE"
+        },
+        "body": ""
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/search?q=test",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"results\": [{\"id\": 1, \"name\": \"Test Resource\"}]}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/upload",
+        "method": "POST",
+        "header": {
+          "Content-Type": "multipart/form-data",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "--boundary\nContent-Disposition: form-data; name=\"file\"; filename=\"test.txt\"\n\nFile content\n--boundary--"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"filename\": \"test.txt\", \"size\": 12}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/files/123",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {
+          "Content-Type": "application/octet-stream",
+          "Content-Disposition": "attachment; filename=\"test.txt\""
+        },
+        "body": "File content"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/files/123",
+        "method": "GET",
+        "header": {
+          "Authorization": "Bearer xyz456",
+          "Range": "bytes=0-99"
+        },
+        "body": ""
+      },
+      "response": {
+        "status_code": 206,
+        "header": {
+          "Content-Type": "application/octet-stream",
+          "Content-Range": "bytes 0-99/1000"
+        },
+        "body": "First 100 bytes of file content"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/slow-endpoint",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 504,
+        "header": {},
+        "body": "{\"error\": \"Gateway timeout\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources/1",
+        "method": "GET",
+        "header": {
+          "Authorization": "Bearer xyz456",
+          "If-Modified-Since": "Wed, 21 Oct 2025 07:28:00 GMT"
+        },
+        "body": ""
+      },
+      "response": {
+        "status_code": 304,
+        "header": {},
+        "body": ""
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/v2/resources",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"resources\": [], \"api_version\": \"2.0\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/v1/resources",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {
+          "Content-Type": "application/json",
+          "Deprecation": "true",
+          "Sunset": "Wed, 21 Oct 2026 00:00:00 GMT"
+        },
+        "body": "{\"resources\": [], \"warning\": \"This API version is deprecated\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "wss://api.example.com/ws",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 101,
+        "header": {
+          "Upgrade": "websocket",
+          "Connection": "Upgrade"
+        },
+        "body": ""
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/stats",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"users\": 1500, \"resources\": 4500, \"requests\": 120000}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/audit-logs",
+        "method": "GET",
+        "header": {"Authorization": "Bearer adminToken"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"logs\": [{\"id\": 1, \"action\": \"login\", \"user\": \"test_user\"}]}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/audit-logs",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 403,
+        "header": {},
+        "body": "{\"error\": \"Forbidden: Insufficient permissions\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/password-reset",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"email\": \"user@example.com\"}"
+      },
+      "response": {
+        "status_code": 202,
+        "header": {},
+        "body": "{\"message\": \"Password reset email sent\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/password-reset/confirm",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"token\": \"resetToken123\", \"new_password\": \"newPass123\"}"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {},
+        "body": "{\"message\": \"Password successfully reset\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/password-reset/confirm",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"token\": \"invalidToken\", \"new_password\": \"newPass123\"}"
+      },
+      "response": {
+        "status_code": 400,
+        "header": {},
+        "body": "{\"error\": \"Invalid or expired token\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/register",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"username\": \"new_user\", \"email\": \"new@example.com\", \"password\": \"pass123\"}"
+      },
+      "response": {
+        "status_code": 201,
+        "header": {},
+        "body": "{\"id\": 456, \"username\": \"new_user\", \"status\": \"pending_verification\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/register",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"username\": \"test_user\", \"email\": \"test@example.com\", \"password\": \"pass123\"}"
+      },
+      "response": {
+        "status_code": 409,
+        "header": {},
+        "body": "{\"error\": \"Username or email already exists\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/verify-email",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"token\": \"verifyToken456\"}"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {},
+        "body": "{\"message\": \"Email successfully verified\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/verify-email",
+        "method": "POST",
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"token\": \"invalidToken\"}"
+      },
+      "response": {
+        "status_code": 400,
+        "header": {},
+        "body": "{\"error\": \"Invalid verification token\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/users/123/preferences",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"theme\": \"dark\", \"notifications\": true}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/users/123/preferences",
+        "method": "PUT",
+        "header": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer xyz456"
+        },
+        "body": "{\"theme\": \"light\"}"
+      },
+      "response": {
+        "status_code": 200,
+        "header": {},
+        "body": "{\"theme\": \"light\", \"notifications\": true}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/docs",
+        "method": "GET",
+        "header": {},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "text/html"},
+        "body": "<html><body><h1>API Documentation</h1></body></html>"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/openapi.json",
+        "method": "GET",
+        "header": {},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"openapi\": \"3.0.0\", \"info\": {\"title\": \"Example API\"}}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/metrics",
+        "method": "GET",
+        "header": {"Authorization": "Bearer adminToken"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "text/plain"},
+        "body": "# HELP http_requests_total Total HTTP requests\nhttp_requests_total 1234"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/metrics",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 403,
+        "header": {},
+        "body": "{\"error\": \"Forbidden: Insufficient permissions\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/status",
+        "method": "GET",
+        "header": {"Authorization": "Bearer adminToken"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"status\": \"operational\", \"uptime\": 123456, \"version\": \"1.2.3\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/resources",
+        "method": "GET",
+        "header": {"Authorization": "Bearer xyz456"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 503,
+        "header": {"Retry-After": "3600"},
+        "body": "{\"error\": \"Service temporarily unavailable for maintenance\"}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/public-data",
+        "method": "GET",
+        "header": {"X-API-Key": "publicKey123"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 200,
+        "header": {"Content-Type": "application/json"},
+        "body": "{\"data\": [1, 2, 3]}"
+      }
+    },
+    {
+      "request": {
+        "url": "https://api.example.com/public-data",
+        "method": "GET",
+        "header": {"X-API-Key": "invalidKey"},
+        "body": ""
+      },
+      "response": {
+        "status_code": 401,
+        "header": {},
+        "body": "{\"error\": \"Invalid API key\"}"
+      }
+    }
+  ],
+    "max_response_time" : 200.5,
+	"max_memory_size": 200600
+}

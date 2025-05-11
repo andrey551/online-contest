@@ -16,15 +16,15 @@ jobs:
         run: pip install flake8
       - name: Run flake8
         run: |
-          flake8 runner/ --max-line-length=88
-          flake8 tester/ --max-line-length=88
+          flake8 backend/runner/ --max-line-length=88
+          flake8 backend/tester/ --max-line-length=88
 
   lint-java:
     runs-on: ubuntu-latest
     name: Lint Java directories
     strategy:
       matrix:
-        dir: [course, file, gateway, submission, user]
+        dir: [backend/course, backend/file, backend/gateway, backend/submission, backend/user]
 
     steps:
       - uses: actions/checkout@v3
@@ -41,5 +41,4 @@ jobs:
 
       - name: Run Gradle check (includes lint, tests, etc.)
         working-directory: ${{ matrix.dir }}
-        run: |
-          ./gradlew checkstyleMain pmdMain -x compileJava -x test
+        run: ./gradlew check

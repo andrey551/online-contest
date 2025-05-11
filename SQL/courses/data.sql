@@ -70,3 +70,66 @@ INSERT INTO laboratory (_id, created, deadline, description, directory, tags, ti
 (gen_random_uuid(), '2024-03-29', '2024-04-28', 'Color theory and typography', '/labs/color-typography', 'color,typography', 'Lab 3: Color & Type', 'e018f7a1-81c7-4e0b-8ae6-83920674a1d5'),
 (gen_random_uuid(), '2024-04-29', '2024-05-28', 'User testing methods', '/labs/user-testing', 'testing,feedback', 'Lab 4: User Testing', 'e018f7a1-81c7-4e0b-8ae6-83920674a1d5'),
 (gen_random_uuid(), '2024-05-29', '2024-06-28', 'Design systems', '/labs/design-systems', 'systems,components', 'Lab 5: Design Systems', 'e018f7a1-81c7-4e0b-8ae6-83920674a1d5');
+
+-- Sample of laboratory description written in markdown( can be replaced for laboratory.description)
+'# 🚀 Backend API Laboratory: FastAPI + MongoDB
+
+**🔖 Laboratory #3**
+**📅 Due:** 2023-12-15
+**🏷️ Tags:** `backend` `fastapi` `mongodb` `rest-api` `python`
+**⏱️ Max Response Time:** 500ms
+**💾 Max Memory Usage:** 512MB
+**📊 Expected Load:** 100+ concurrent users
+
+## 🎯 Purpose
+Build a high-performance task management API that demonstrates:
+- 🏗️ Modern API architecture
+- 🛡️ Secure authentication
+- 🚦 Performance optimization
+- 📝 Comprehensive documentation
+- 🧩 Modular design
+
+## 🛠️ Technical Specifications
+
+### ⚙️ System Requirements
+| Metric               | Requirement          | Icon |
+|----------------------|----------------------|------|
+| **Response Time**    | ≤500ms (p95)        | ⏱️   |
+| **Memory Usage**     | ≤512MB under load   | 💾   |
+| **Concurrent Users** | Supports 100+       | 👥   |
+| **Availability**     | 99% uptime          | 🟢   |
+
+## 🔌 API Endpoints
+
+### 🔐 Authentication
+| Endpoint               | Method | Description                     | Parameters               | Icon |
+|------------------------|--------|---------------------------------|--------------------------|------|
+| `POST /auth/register`  | POST   | User registration               | email, password, name    | ✏️   |
+| `POST /auth/login`     | POST   | JWT token generation            | email, password          | 🔑   |
+| `POST /auth/refresh`   | POST   | Refresh access token            | refresh_token            | 🔄   |
+
+### 👤 User Management
+| Endpoint               | Method | Description                     | Auth Required | Icon |
+|------------------------|--------|---------------------------------|---------------|------|
+| `GET /users/me`        | GET    | Get current user profile        | Yes           | 👤   |
+| `GET /users/{id}`      | GET    | Get user by ID (admin only)     | Yes           | 🕵️  |
+
+### ✅ Task Management
+| Endpoint               | Method | Description                     | Query Params             | Icon |
+|------------------------|--------|---------------------------------|--------------------------|------|
+| `POST /tasks/`         | POST   | Create new task                 | title, description       | ➕   |
+| `GET /tasks/`          | GET    | List all tasks (paginated)      | page, limit, status      | 📋   |
+| `GET /tasks/{id}`      | GET    | Get task details                | -                        | 🔍   |
+| `PUT /tasks/{id}`      | PUT    | Update task                     | title, description, status| ✏️   |
+| `DELETE /tasks/{id}`   | DELETE | Delete task                     | -                        | 🗑️   |
+
+## 🚦 Performance Requirements
+```python
+# Example performance check
+from fastapi import HTTPException
+
+@app.get("/tasks/")
+async def list_tasks():
+    if psutil.virtual_memory().used > 512 * 1024 * 1024:
+        raise HTTPException(500, "Memory limit exceeded")
+    # ... implementation'
