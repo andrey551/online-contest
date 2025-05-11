@@ -1,4 +1,3 @@
-from docker.models.containers import Container
 from requests import Response
 
 from app.schemas.enums.Status import Status
@@ -15,5 +14,3 @@ def check(response: Response, answer: BaseResponse) -> Status | None:
         return Status.FAILED
 
     return Status.PASSED
-
-

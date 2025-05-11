@@ -40,14 +40,14 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'submission_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
     _globals['DESCRIPTOR']._loaded_options = None
     _globals['DESCRIPTOR']._serialized_options = b'\n\027com.tad.submission.grpc'
-    _globals['_SUBMISSIONTASKREQUEST']._serialized_start= 20
-    _globals['_SUBMISSIONTASKREQUEST']._serialized_end= 99
-    _globals['_SUBMISSIONTASKRESPONSE']._serialized_start= 101
-    _globals['_SUBMISSIONTASKRESPONSE']._serialized_end= 142
-    _globals['_CREATESUBMISSIONREQUEST']._serialized_start= 144
-    _globals['_CREATESUBMISSIONREQUEST']._serialized_end= 209
-    _globals['_CREATESUBMISSIONRESPONSE']._serialized_start= 211
-    _globals['_CREATESUBMISSIONRESPONSE']._serialized_end= 260
-    _globals['_SUBMISSIONTASKSERVICE']._serialized_start= 263
-    _globals['_SUBMISSIONTASKSERVICE']._serialized_end= 438
+    _globals['_SUBMISSIONTASKREQUEST']._serialized_start = 20
+    _globals['_SUBMISSIONTASKREQUEST']._serialized_end = 99
+    _globals['_SUBMISSIONTASKRESPONSE']._serialized_start = 101
+    _globals['_SUBMISSIONTASKRESPONSE']._serialized_end = 142
+    _globals['_CREATESUBMISSIONREQUEST']._serialized_start = 144
+    _globals['_CREATESUBMISSIONREQUEST']._serialized_end = 209
+    _globals['_CREATESUBMISSIONRESPONSE']._serialized_start = 211
+    _globals['_CREATESUBMISSIONRESPONSE']._serialized_end = 260
+    _globals['_SUBMISSIONTASKSERVICE']._serialized_start = 263
+    _globals['_SUBMISSIONTASKSERVICE']._serialized_end = 438
 # @@protoc_insertion_point(module_scope)

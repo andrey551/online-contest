@@ -17,7 +17,7 @@ async def import_tests(tests: TestSet):
         return tests_dict
     else:
         raise HTTPException(status_code=400,
-                            detail = "Failed to insert item")
+                            detail="Failed to insert item")
 
 
 def retrieve_tests(test_id: UUID) -> BaseResponse:

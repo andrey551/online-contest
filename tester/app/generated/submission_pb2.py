@@ -22,24 +22,42 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
-
-
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10submission.proto\"O\n\x15SubmissionTaskRequest\x12\x11\n\ttask_type\x18\x01 \x01(\t\x12\x15\n\rsubmission_id\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\t\")\n\x16SubmissionTaskResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\"A\n\x17\x43reateSubmissionRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x15\n\rlaboratory_id\x18\x02 \x01(\t\"1\n\x18\x43reateSubmissionResponse\x12\x15\n\rsubmission_id\x18\x01 \x01(\t2\xaf\x01\n\x15SubmissionTaskService\x12G\n\x14HandleSubmissionTask\x12\x16.SubmissionTaskRequest\x1a\x17.SubmissionTaskResponse\x12M\n\x16HandleCreateSubmission\x12\x18.CreateSubmissionRequest\x1a\x19.CreateSubmissionResponseB\x19\n\x17\x63om.tad.submission.grpcb\x06proto3')
+DESCRIPTOR = (_descriptor_pool
+              .Default()
+              .AddSerializedFile(b'\n\x10submission.proto\"O\n\x15'
+                                 b'SubmissionTaskRequest\x12\x11\n\t'
+                                 b'task_type\x18\x01 \x01(\t\x12\x15\n\r'
+                                 b'submission_id\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61'
+                                 b'ta\x18\x03 \x01(\t\")\n\x16SubmissionTaskResponse'
+                                 b'\x12\x0f\n\x07success\x18\x01 \x01(\x08\"'
+                                 b'A\n\x17\x43'
+                                 b'reateSubmissionRequest\x12\x0f\n\x07'
+                                 b'user_id\x18\x01 \x01(\t\x12\x15\n\rlaboratory_id'
+                                 b'\x18\x02 \x01(\t\"1\n\x18\x43'
+                                 b'reateSubmissionResponse'
+                                 b'\x12\x15\n\rsubmission_id\x18\x01 \x01(\t'
+                                 b'2\xaf\x01\n\x15SubmissionTaskService\x12G\n\x14'
+                                 b'HandleSubmissionTask\x12\x16.SubmissionTaskRequest'
+                                 b'\x1a\x17.SubmissionTaskResponse\x12M\n\x16'
+                                 b'HandleCreateSubmission\x12\x18'
+                                 b'.CreateSubmissionRequest'
+                                 b'\x1a\x19.CreateSubmissionResponseB\x19\n\x17\x63'
+                                 b'om.tad.submission.grpcb\x06proto3'))
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'submission_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-  _globals['DESCRIPTOR']._loaded_options = None
-  _globals['DESCRIPTOR']._serialized_options = b'\n\027com.tad.submission.grpc'
-  _globals['_SUBMISSIONTASKREQUEST']._serialized_start=20
-  _globals['_SUBMISSIONTASKREQUEST']._serialized_end=99
-  _globals['_SUBMISSIONTASKRESPONSE']._serialized_start=101
-  _globals['_SUBMISSIONTASKRESPONSE']._serialized_end=142
-  _globals['_CREATESUBMISSIONREQUEST']._serialized_start=144
-  _globals['_CREATESUBMISSIONREQUEST']._serialized_end=209
-  _globals['_CREATESUBMISSIONRESPONSE']._serialized_start=211
-  _globals['_CREATESUBMISSIONRESPONSE']._serialized_end=260
-  _globals['_SUBMISSIONTASKSERVICE']._serialized_start=263
-  _globals['_SUBMISSIONTASKSERVICE']._serialized_end=438
+    _globals['DESCRIPTOR']._loaded_options = None
+    _globals['DESCRIPTOR']._serialized_options = b'\n\027com.tad.submission.grpc'
+    _globals['_SUBMISSIONTASKREQUEST']._serialized_start = 20
+    _globals['_SUBMISSIONTASKREQUEST']._serialized_end = 99
+    _globals['_SUBMISSIONTASKRESPONSE']._serialized_start = 101
+    _globals['_SUBMISSIONTASKRESPONSE']._serialized_end = 142
+    _globals['_CREATESUBMISSIONREQUEST']._serialized_start = 144
+    _globals['_CREATESUBMISSIONREQUEST']._serialized_end = 209
+    _globals['_CREATESUBMISSIONRESPONSE']._serialized_start = 211
+    _globals['_CREATESUBMISSIONRESPONSE']._serialized_end = 260
+    _globals['_SUBMISSIONTASKSERVICE']._serialized_start = 263
+    _globals['_SUBMISSIONTASKSERVICE']._serialized_end = 438
 # @@protoc_insertion_point(module_scope)

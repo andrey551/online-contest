@@ -17,7 +17,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in container_pb2_grpc.py depends on'
+        + ' but the generated code in container_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -36,7 +36,9 @@ class RunnerServiceStub(object):
         """
         self.getContainerId = channel.unary_unary(
                 '/RunnerService/getContainerId',
-                request_serializer=container__pb2.getContainerIdRequest.SerializeToString,
+                request_serializer=container__pb2
+                .getContainerIdRequest
+                .SerializeToString,
                 response_deserializer=container__pb2.getContainerIdResponse.FromString,
                 _registered_method=True)
 

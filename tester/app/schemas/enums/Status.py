@@ -9,6 +9,7 @@ class Status(Enum):
     TIMED_OUT = 'timed_out'
     COMPILE_ERROR = 'compile_error'
 
+
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Enum):

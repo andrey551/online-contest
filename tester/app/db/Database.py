@@ -1,5 +1,4 @@
 import motor.motor_asyncio
-from sqlalchemy.testing.plugin.plugin_base import logging
 
 from app.core.Settings import settings
 

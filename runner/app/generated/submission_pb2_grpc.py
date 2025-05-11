@@ -17,7 +17,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in submission_pb2_grpc.py depends on'
+        + ' but the generated code in submission_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -89,21 +89,21 @@ def add_SubmissionTaskServiceServicer_to_server(servicer, server):
                                           rpc_method_handlers)
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class SubmissionTaskService(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
     def HandleSubmissionTask(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+                             target,
+                             options=(),
+                             channel_credentials=None,
+                             call_credentials=None,
+                             insecure=False,
+                             compression=None,
+                             wait_for_ready=None,
+                             timeout=None,
+                             metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -122,15 +122,15 @@ class SubmissionTaskService(object):
 
     @staticmethod
     def HandleCreateSubmission(request,
-                                target,
-                                options=(),
-                                channel_credentials=None,
-                                call_credentials=None,
-                                insecure=False,
-                                compression=None,
-                                wait_for_ready=None,
-                                timeout=None,
-                                metadata=None):
+                               target,
+                               options=(),
+                               channel_credentials=None,
+                               call_credentials=None,
+                               insecure=False,
+                               compression=None,
+                               wait_for_ready=None,
+                               timeout=None,
+                               metadata=None):
         return grpc.experimental.unary_unary(
             request,
             target,

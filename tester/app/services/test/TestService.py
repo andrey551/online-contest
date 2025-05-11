@@ -1,6 +1,5 @@
 from http.client import HTTPException
 
-from bson import ObjectId
 from uuid import UUID
 
 from app.db.Database import test_collection
@@ -10,7 +9,7 @@ from app.schemas.responses.ResponseModel import BaseResponse
 
 async def import_tests(tests: TestSet):
     tests_dict = tests.dict()
-    tests_dict["problem_id"] = str(tests_dict["problem_id"])
+    tests_dict["laboratory_id"] = str(tests_dict["laboratory_id"])
 
     tests_inserted = await test_collection.insert_one(tests_dict)
 
@@ -20,22 +19,27 @@ async def import_tests(tests: TestSet):
     else:
         raise HTTPException(status_code=400, detail="Failed to insert item")
 
-def retrieve_tests(test_id: UUID) -> BaseResponse:
-    test = test_collection.find_one({"_id": test_id})
+
+async def retrieve_tests(test_id: UUID) -> BaseResponse:
+    test = await test_collection.find_one({"_id": test_id})
 
     if test is None:
-        return BaseResponse(status_code = 404, headers=None,  body = "Can not find test")
+        return BaseResponse(status_code=404,
+                            headers=None,
+                            body="Can not find test")
 
-    return BaseResponse(status_code = 200, headers=None,  body = test)
+    return BaseResponse(status_code=200, headers=None, body=test)
+
 
 def delete_tests(test_id: UUID) -> BaseResponse:
     test = test_collection.find_one({"_id": test_id})
 
     if test is None:
-        return BaseResponse(status_code = 404, headers=None, body = "Can not find test")
+        return BaseResponse(status_code=404, headers=None, body="Can not find test")
     test_collection.delete_one({"_id": test_id})
 
-    return BaseResponse(status_code = 200, headers=None, body = None)
+    return BaseResponse(status_code=200, headers=None, body=None)
 
-async def retrieve_test_by_problem_id(problem_id: str) -> TestSet|None:
-    return await test_collection.find_one({"problem_id": problem_id})
+
+async def retrieve_test_by_problem_id(laboratory_id: str) -> TestSet | None:
+    return await test_collection.find_one({"laboratory_id": laboratory_id})

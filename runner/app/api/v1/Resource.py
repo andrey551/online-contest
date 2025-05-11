@@ -1,4 +1,12 @@
-from app.services.resource.ResourceService import *
+from uuid import UUID
+import logging
+
+from app.services.resource.ResourceService import insert_resource
+from app.services.resource.ResourceService import update_resource
+from app.services.resource.ResourceService import delete_resource
+from app.services.resource.ResourceService import get_resource_by_laboratory_id
+from app.services.resource.ResourceService import impl_resource
+from app.models.Resource import Resource
 from fastapi import APIRouter
 
 resource_router = APIRouter()
@@ -22,7 +30,7 @@ async def require_resources(resource: Resource):
 
 
 @resource_router.put('/api/v1/resources')
-async def update_resources(id: UUID , resource: Resource):
+async def update_resources(id: UUID, resource: Resource):
     try:
         response = await update_resource(id, resource)
         return response
@@ -42,7 +50,7 @@ async def delete_resources():
 @resource_router.get('/api/v1/resources/{id}')
 async def get_resources(id: str):
     try:
-        response = await get_resource_by_problem_id(id)
+        response = await get_resource_by_laboratory_id(id)
         logger.info(response)
         return response.to_dict()
     except Exception as e:
@@ -56,4 +64,3 @@ async def implement_resources(id: str):
         return response
     except Exception as e:
         return e
-

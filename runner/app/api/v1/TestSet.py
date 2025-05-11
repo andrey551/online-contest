@@ -26,6 +26,6 @@ def retrieve_tests(uuid: UUID):
 
 
 @test_set_router.delete("/api/v1/test-set/{uuid}")
-def delete_tests(uuid: UUID):
+def delete_test(uuid: UUID):
     response = delete_tests(uuid)
     return response

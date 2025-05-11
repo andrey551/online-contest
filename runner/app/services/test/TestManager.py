@@ -12,6 +12,7 @@ from docker.models.containers import Container
 
 logger = logging.getLogger(__name__)
 
+
 class TestManager:
     def __init__(self, docker_manager: DockerManager, container_id: str):
         self.docker_client = docker_manager.client
@@ -31,7 +32,7 @@ class TestManager:
 
     # Release report
     async def get_report(self, tests: TestSet, container_id: str) -> Record | None:
-        report = Record(total = len(tests["data"]), passed = 0, status_list = [])
+        report = Record(total=len(tests["data"]), passed=0, status_list=[])
         return_ = True
         task = asyncio.create_task(self.tracking_memory(
             container_id,
@@ -59,7 +60,7 @@ class TestManager:
                               container: str,
                               interval,
                               memory_limit,
-                              return_ = True):
+                              return_=True):
         memory_usage = 0.0
         try:
             container = docker_container.retrieve_container(container)
