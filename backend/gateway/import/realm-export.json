@@ -1,0 +1,14 @@
+{
+  "realm": "contest",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "online-contest-frontend",
+      "enabled": true,
+      "secret": "vNGggqSKmFqmkq9RsOQ4hn3tSkQIPhnl",
+      "redirectUris": ["http://localhost:8080/login/oauth2/code/keycloak"],
+      "webOrigins": ["http://localhost:8080"],
+      "protocol": "openid-connect"
+    }
+  ]
+}
