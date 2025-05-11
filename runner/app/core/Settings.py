@@ -15,5 +15,6 @@ class Settings(BaseSettings):
         "env_file_encoding": "utf-8"
     }
 
+
 # Create an instance of Settings
 settings = Settings()

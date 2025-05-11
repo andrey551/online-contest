@@ -30,8 +30,8 @@ class TestManager:
         return status
 
     # Release report
-    async def get_report(self, tests: TestSet,  container_id: str) -> Record | None:
-        report = Record(total= len(tests["data"]), passed = 0, status_list = [])
+    async def get_report(self, tests: TestSet, container_id: str) -> Record | None:
+        report = Record(total= len(tests["data"]), passed= 0, status_list= [])
         return_ = True
         task = asyncio.create_task(self.tracking_memory(
             container_id,
@@ -55,7 +55,11 @@ class TestManager:
 
         return report
 
-    async def tracking_memory(self, container: str, interval, memory_limit, return_ = True):
+    async def tracking_memory(self,
+                              container: str,
+                              interval,
+                              memory_limit,
+                              return_= True):
         memory_usage = 0.0
         try:
             container = docker_container.retrieve_container(container)
@@ -74,19 +78,27 @@ class TestManager:
 # Send request to solution's endpoint
 async def send_request(request: Request):
     if request["method"] == "GET":
-        response =  requests.get(request["url"], headers=request["header"])
+        response =  requests.get(request["url"],
+                                 headers=request["header"])
     elif request["method"] == "DELETE":
-        response = requests.delete(request["url"], headers=request["header"])
+        response = requests.delete(request["url"],
+                                   headers=request["header"])
     elif request["method"] == "POST":
         if 'body' in request:
-            response = requests.post(request["url"], headers=request["header"], data=request["body"])
+            response = requests.post(request["url"],
+                                     headers=request["header"],
+                                     data=request["body"])
         else:
-            response = requests.post(request["url"], headers=request["header"])
+            response = requests.post(request["url"],
+                                     headers=request["header"])
     elif request["method"] == "PUT":
         if 'body' in request:
-            response = requests.put(request["url"], headers=request["header"], data=request["body"])
+            response = requests.put(request["url"],
+                                    headers=request["header"],
+                                    data=request["body"])
         else:
-            response = requests.put(request["url"], headers=request["header"])
+            response = requests.put(request["url"],
+                                    headers=request["header"])
     else:
         response = None
 

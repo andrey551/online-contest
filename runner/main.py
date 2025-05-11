@@ -3,6 +3,9 @@ import logging
 
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.api.v1.Base import base_router
 from app.api.v1.Resource import resource_router
 from app.api.v1.Solution import solution_router
@@ -11,7 +14,7 @@ from app.services.grpc.GrpcService import serve  # Make sure this is correct
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO,  # Set the logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",  # Log format
     handlers=[
         logging.FileHandler("runner.log"),  # Log to a file
@@ -26,7 +29,7 @@ async def lifespan(app: FastAPI):
     print("🚀 FastAPI is starting and the gRPC server will run in the background.")
     grpc_task = asyncio.create_task(serve())  # Run gRPC server in background
 
-    yield  # Control passes to FastAPI here, allowing it to run while gRPC server is active
+    yield  # Control passes to FastAPI, allowing to run while gRPC server is active
 
     # Shutdown logic: Cancel the gRPC task when FastAPI shuts down
     print("🛑 FastAPI is shutting down...")
@@ -38,6 +41,14 @@ async def lifespan(app: FastAPI):
 
 # Initialize FastAPI with the lifespan context
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or specify ["https://example.com"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Include routers for API endpoints
 app.include_router(base_router)

@@ -10,6 +10,7 @@ class ContainerResource(BaseModel):
     command: str
     user: str
 
+
 class Resource(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)  # Allow arbitrary types
     _id: Optional[ObjectId] = None

@@ -9,6 +9,7 @@ import app.generated.container_pb2 as container_pb2
 
 logger = logging.getLogger(__name__)
 
+
 class GrpcService(RunnerServiceServicer):
     def __init__(self):
         pass
@@ -16,6 +17,7 @@ class GrpcService(RunnerServiceServicer):
     async def getContainerId(self, request, context):
         container_id = await get_container_id_by_solution_id(request.solutionId)
         return container_pb2.getContainerIdResponse(containerId=container_id)
+
 
 async def serve():
     try:
@@ -27,5 +29,3 @@ async def serve():
         await server.wait_for_termination()
     except Exception as e:
         logger.error(e)
-
-

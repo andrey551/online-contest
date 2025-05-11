@@ -1,4 +1,5 @@
 import logging
+import socket
 
 from app.models.Record import Record
 from app.services.docker.DockerManager import docker_container
@@ -7,6 +8,7 @@ from app.services.test.TestManager import TestManager
 from app.services.test.TestService import retrieve_test_by_problem_id
 
 logger = logging.getLogger(__name__)
+
 
 async def run_and_check_solution(solution_id: str) -> Record | None:
     solution = await get_solution(solution_id)
@@ -23,13 +25,3 @@ async def run_and_check_solution(solution_id: str) -> Record | None:
     report = await test_manager.get_report(tests, solution["container_id"])
 
     return report
-    # for test in tests["data"]:
-    #     real_response = await send_request(test["request"])
-
-
-
-
-
-
-
-

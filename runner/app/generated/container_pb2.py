@@ -21,20 +21,22 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 
 _sym_db = _symbol_database.Default()
 
-
-
-
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x63ontainer.proto\"A\n\x15getContainerIdRequest\x12\x12\n\nsolutionId\x18\x01 \x01(\t\x12\x14\n\x0csubmissionId\x18\x02 \x01(\t\"-\n\x16getContainerIdResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t2R\n\rRunnerService\x12\x41\n\x0egetContainerId\x12\x16.getContainerIdRequest\x1a\x17.getContainerIdResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n\x0f\x63ontainer.proto\"A\n\x15getContainerIdRequest\x12\x12\n\n'
+    b'solutionId\x18\x01 \x01(\t\x12\x14\n\x0csubmissionId\x18\x02 \x01(\t\"-\n\x16'
+    b'getContainerIdResponse\x12\x13\n\x0b\x63ontainerId\x18\x01 \x01(\t2R\n\r'
+    b'RunnerService\x12\x41\n\x0egetContainerId\x12\x16.getContainerIdRequest\x1a\x17.'
+    b'getContainerIdResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'container_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_GETCONTAINERIDREQUEST']._serialized_start=19
-  _globals['_GETCONTAINERIDREQUEST']._serialized_end=84
-  _globals['_GETCONTAINERIDRESPONSE']._serialized_start=86
-  _globals['_GETCONTAINERIDRESPONSE']._serialized_end=131
-  _globals['_RUNNERSERVICE']._serialized_start=133
-  _globals['_RUNNERSERVICE']._serialized_end=215
+  _globals['_GETCONTAINERIDREQUEST']._serialized_start= 19
+  _globals['_GETCONTAINERIDREQUEST']._serialized_end= 84
+  _globals['_GETCONTAINERIDRESPONSE']._serialized_start= 86
+  _globals['_GETCONTAINERIDRESPONSE']._serialized_end= 131
+  _globals['_RUNNERSERVICE']._serialized_start= 133
+  _globals['_RUNNERSERVICE']._serialized_end= 215
 # @@protoc_insertion_point(module_scope)

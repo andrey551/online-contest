@@ -13,5 +13,3 @@ def check(response: Response, answer: BaseResponse) -> Status | None:
         return Status.FAILED
 
     return Status.PASSED
-
-

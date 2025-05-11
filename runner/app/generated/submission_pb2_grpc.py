@@ -9,7 +9,8 @@ _version_not_supported = False
 
 try:
     from grpc._utilities import first_version_is_lower
-    _version_not_supported = first_version_is_lower(GRPC_VERSION, GRPC_GENERATED_VERSION)
+    _version_not_supported = first_version_is_lower(GRPC_VERSION,
+                                                    GRPC_GENERATED_VERSION)
 except ImportError:
     _version_not_supported = True
 
@@ -34,13 +35,17 @@ class SubmissionTaskServiceStub(object):
         """
         self.HandleSubmissionTask = channel.unary_unary(
                 '/SubmissionTaskService/HandleSubmissionTask',
-                request_serializer=submission__pb2.SubmissionTaskRequest.SerializeToString,
-                response_deserializer=submission__pb2.SubmissionTaskResponse.FromString,
+                request_serializer=submission__pb2.SubmissionTaskRequest
+                                                  .SerializeToString,
+                response_deserializer=submission__pb2.SubmissionTaskResponse
+                                                     .FromString,
                 _registered_method=True)
         self.HandleCreateSubmission = channel.unary_unary(
                 '/SubmissionTaskService/HandleCreateSubmission',
-                request_serializer=submission__pb2.CreateSubmissionRequest.SerializeToString,
-                response_deserializer=submission__pb2.CreateSubmissionResponse.FromString,
+                request_serializer=submission__pb2.CreateSubmissionRequest
+                                                  .SerializeToString,
+                response_deserializer=submission__pb2.CreateSubmissionResponse
+                                                     .FromString,
                 _registered_method=True)
 
 
@@ -64,19 +69,24 @@ def add_SubmissionTaskServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'HandleSubmissionTask': grpc.unary_unary_rpc_method_handler(
                     servicer.HandleSubmissionTask,
-                    request_deserializer=submission__pb2.SubmissionTaskRequest.FromString,
-                    response_serializer=submission__pb2.SubmissionTaskResponse.SerializeToString,
+                    request_deserializer=submission__pb2.SubmissionTaskRequest
+                                                        .FromString,
+                    response_serializer=submission__pb2.SubmissionTaskResponse
+                                                       .SerializeToString,
             ),
             'HandleCreateSubmission': grpc.unary_unary_rpc_method_handler(
                     servicer.HandleCreateSubmission,
-                    request_deserializer=submission__pb2.CreateSubmissionRequest.FromString,
-                    response_serializer=submission__pb2.CreateSubmissionResponse.SerializeToString,
+                    request_deserializer=submission__pb2.CreateSubmissionRequest
+                                                        .FromString,
+                    response_serializer=submission__pb2.CreateSubmissionResponse
+                                                       .SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
             'SubmissionTaskService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('SubmissionTaskService', rpc_method_handlers)
+    server.add_registered_method_handlers('SubmissionTaskService',
+                                          rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -108,19 +118,19 @@ class SubmissionTaskService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method= True)
 
     @staticmethod
     def HandleCreateSubmission(request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
+            options= (),
+            channel_credentials= None,
+            call_credentials= None,
+            insecure= False,
+            compression= None,
+            wait_for_ready= None,
+            timeout= None,
+            metadata= None):
         return grpc.experimental.unary_unary(
             request,
             target,
@@ -135,4 +145,4 @@ class SubmissionTaskService(object):
             wait_for_ready,
             timeout,
             metadata,
-            _registered_method=True)
+            _registered_method= True)

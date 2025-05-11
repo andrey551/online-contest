@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 Resource API: To control resources of docker (Docker image, docker container)
 """
 
+
 @resource_router.post('/api/v1/resources')
 async def require_resources(resource: Resource):
     logger.info("Adding resource")
@@ -20,7 +21,7 @@ async def require_resources(resource: Resource):
         return e
 
 @resource_router.put('/api/v1/resources')
-async def update_resources(id: UUID, resource: Resource):
+async def update_resources(id: UUID , resource: Resource):
     try:
         response = await update_resource(id, resource)
         return response

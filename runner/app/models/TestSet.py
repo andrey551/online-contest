@@ -12,14 +12,17 @@ class Request(BaseModel):
     header: Optional[Dict[str, str]] = None
     body: Optional[str] = None
 
+
 class Response(BaseModel):
     status_code: Optional[int]
     header: Optional[Dict[str, str]] = None
     body: Optional[str] = None
 
+
 class Testcase(BaseModel):
     request: Request
     response: Response
+
 
 class TestSet(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)

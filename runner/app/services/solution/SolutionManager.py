@@ -10,12 +10,14 @@ from fastapi import HTTPException
 
 logger = logging.getLogger(__name__)
 
-async def update_if_exist_or_create(solution_req : SolutionRequest, container_id: str):
+
+async def update_if_exist_or_create(solution_req: SolutionRequest, container_id: str):
     logger.info("go there")
     try:
         solution = to_solution(solution_req, container_id)
 
-        exist_solution = await solution_collection.find_one({"laboratory_id": solution.laboratory_id,
+        exist_solution = await solution_collection.find_one({
+                                                       "laboratory_id": solution.laboratory_id,
                                                        "author_id": solution.author_id})
 
         if exist_solution:
@@ -32,9 +34,11 @@ async def update_if_exist_or_create(solution_req : SolutionRequest, container_id
     except Exception as e:
         logger.error(e)
 
-async def insert_solution(solution_req : SolutionRequest, container_id: str):
+
+async def insert_solution(solution_req: SolutionRequest, container_id: str):
     try:
         solution = to_solution(solution_req, container_id)
+
 
         solution_ret = await solution_collection.insert_one(solution.dict())
 
@@ -43,12 +47,13 @@ async def insert_solution(solution_req : SolutionRequest, container_id: str):
             return str(solution_ret.inserted_id)
 
         else:
-            raise HTTPException(status_code=404, detail="Solution not found")
+            raise HTTPException(status_code= 404, detail="Solution not found")
 
     except Exception as e:
         logger.error(e)
 
-async def get_solution(solution_id:str) :
+
+async def get_solution(solution_id:str):
     try:
         solution = await solution_collection.find_one({"_id": ObjectId(solution_id)})
         return solution
@@ -56,7 +61,8 @@ async def get_solution(solution_id:str) :
         logger.error(e)
         raise HTTPException(status_code=404, detail="Solution not found")
 
-async def containerize_solution(solution_req : SolutionRequest):
+
+async def containerize_solution(solution_req: SolutionRequest):
     try:
         laboratory_id_str = solution_req.laboratory_id
         resource = await get_resource_by_laboratory_id(laboratory_id_str)
@@ -66,7 +72,8 @@ async def containerize_solution(solution_req : SolutionRequest):
         else:
             logger.info(f"Got resource {resource}")
 
-        container = await runner.run_project_in_docker(resource["list_images"][0], solution_req)
+        container = await runner.run_project_in_docker(resource["list_images"][0],
+                                                       solution_req)
         logger.debug(container)
         return container
     except AttributeError as e:
@@ -78,7 +85,8 @@ async def containerize_solution(solution_req : SolutionRequest):
     except Exception as e:
         logger.error(e)
 
-async def get_container_id_by_laboratory_id( laboratory_id: str):
+
+async def get_container_id_by_laboratory_id(laboratory_id: str):
     try:
         resource = await solution_collection.find_one({"laboratory_id": laboratory_id})
         if resource is None:
@@ -88,7 +96,8 @@ async def get_container_id_by_laboratory_id( laboratory_id: str):
         logger.error(e)
         raise Exception("Solution not found")
 
-async def get_container_id_by_solution_id( solution_id: str):
+
+async def get_container_id_by_solution_id(solution_id: str):
     try:
         resource = await solution_collection.find_one({"_id": ObjectId(solution_id)})
         if resource is None:
@@ -103,5 +112,3 @@ async def do_test(solution_id: str):
     solution = await get_solution(solution_id)
     if solution is None:
         raise HTTPException(status_code=404, detail="Solution not found")
-
-

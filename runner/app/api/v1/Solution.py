@@ -1,13 +1,11 @@
-import logging
-from datetime import datetime
 from pathlib import Path
-
-from app.models.Solution import SolutionRequest
 from app.services.docker.DockerManager import create_submission
-from app.services.solution.SolutionManager import containerize_solution, update_if_exist_or_create
+from app.services.solution.SolutionManager import *
 from app.services.solution.SolutionRunner import run_and_check_solution
 from fastapi import APIRouter, UploadFile, File, Form
 from starlette.responses import JSONResponse
+
+from app.utils.port import get_free_port
 
 logger = logging.getLogger(__name__)
 solution_router = APIRouter()
@@ -22,9 +20,10 @@ Usage: Receive backend system solution from student
 Parameters:
     File: A .zip file contain backend system solution
     Language: Programming language of solution
-    Problem ID: Problem ID of solution 
+    Problem ID: Problem ID of solution
 Return: 
 """
+
 
 @solution_router.post("/api/v1/solution")
 async def submit_solution(laboratory_id: str = Form(...),
@@ -37,11 +36,12 @@ async def submit_solution(laboratory_id: str = Form(...),
                                             author_id=author_id,
                                             file_name=file.filename,
                                            crt_dir=str(current_dir).strip("/\\"),
-                                           submit_time=datetime.now())
+                                           submit_time=datetime.now(),
+                                           port = get_free_port())
         if not file.filename.endswith(".zip"):
             return JSONResponse(
-                status_code=400,
-                content={
+                status_code= 400,
+                content= {
                     "error": "File must have .zip format"
                 }
             )
@@ -58,13 +58,13 @@ async def submit_solution(laboratory_id: str = Form(...),
         container_id = await containerize_solution(solution_request)
         logger.info(f"Container ID: {container_id}")
         solution = await update_if_exist_or_create(solution_request, str(container_id))
-        submission_id = await create_submission(user_id=author_id,laboratory_id=laboratory_id)
+        submission_id = await create_submission(user_id= author_id, laboratory_id= laboratory_id)
 
         return JSONResponse(
             status_code=200,
             content={
                 "submission_id": submission_id["submissionId"],
-                "solution_id":solution
+                "solution_id": solution
             }
         )
 
@@ -73,6 +73,8 @@ async def submit_solution(laboratory_id: str = Form(...),
             status_code=400,
             content={"error": str(e)}
         )
+
+
 @solution_router.put("/api/v1/solution/{solution_id}")
 async def check_solution(solution_id):
     try:

@@ -16,24 +16,36 @@ async def import_tests(tests: TestSet):
         tests_dict["_id"] = str(tests_inserted.inserted_id)
         return tests_dict
     else:
-        raise HTTPException(status_code=400, detail="Failed to insert item")
+        raise HTTPException(status_code= 400,
+                            detail= "Failed to insert item")
+
 
 def retrieve_tests(test_id: UUID) -> BaseResponse:
     test = test_collection.find_one({"_id": test_id})
 
     if test is None:
-        return BaseResponse(status_code = 404, headers=None,  body = "Can not find test")
+        return BaseResponse(status_code= 404,
+                            headers= None,
+                            body= "Can not find test")
 
-    return BaseResponse(status_code = 200, headers=None,  body = test)
+    return BaseResponse(status_code= 200,
+                        headers= None,
+                        body= test)
+
 
 def delete_tests(test_id: UUID) -> BaseResponse:
     test = test_collection.find_one({"_id": test_id})
 
     if test is None:
-        return BaseResponse(status_code = 404, headers=None, body = "Can not find test")
+        return BaseResponse(status_code= 404,
+                            headers= None,
+                            body= "Can not find test")
     test_collection.delete_one({"_id": test_id})
 
-    return BaseResponse(status_code = 200, headers=None, body = None)
+    return BaseResponse(status_code= 200,
+                        headers= None,
+                        body= None)
 
-async def retrieve_test_by_problem_id(problem_id: UUID) -> TestSet|None:
+
+async def retrieve_test_by_problem_id(problem_id: UUID) -> TestSet | None:
     return await test_collection.find_one({"problem_id": problem_id})
