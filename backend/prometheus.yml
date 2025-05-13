@@ -5,12 +5,10 @@ scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 1m
     static_configs:
-      - targets: ['localhost:9090']
-
-  - job_name: 'node'
+      - targets: ['course-course-service-1:8082']
+  - job_name: 'cadvisor'
     static_configs:
-      - targets: ['node-exporter:9100']
-
+      - targets: ['cadvisor:8080']
 #remote_write:
 #  - url: '<Your Prometheus remote_write endpoint>'
 #    basic_auth:
