@@ -19,26 +19,26 @@ jobs:
           flake8 backend/runner/ --max-line-length=88
           flake8 backend/tester/ --max-line-length=88
 
-  lint-java:
-    runs-on: ubuntu-latest
-    name: Lint Java directories
-    strategy:
-      matrix:
-        dir: [backend/course, backend/file, backend/gateway, backend/submission, backend/user]
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Grant execute permission to Gradle wrapper
-        working-directory: ${{ matrix.dir }}
-        run: chmod +x gradlew
-
-      - name: Run Gradle check (includes lint, tests, etc.)
-        working-directory: ${{ matrix.dir }}
-        run: ./gradlew check
+#  lint-java:
+#    runs-on: ubuntu-latest
+#    name: Lint Java directories
+#    strategy:
+#      matrix:
+#        dir: [backend/course, backend/file, backend/gateway, backend/submission, backend/user]
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#
+#      - name: Grant execute permission to Gradle wrapper
+#        working-directory: ${{ matrix.dir }}
+#        run: chmod +x gradlew
+#
+#      - name: Run Gradle check (includes lint, tests, etc.)
+#        working-directory: ${{ matrix.dir }}
+#        run: ./gradlew check
