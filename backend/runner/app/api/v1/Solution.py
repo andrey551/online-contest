@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 from app.services.docker.DockerManager import create_submission
 from app.services.solution.SolutionManager import containerize_solution
-from app.services.solution.SolutionRunner import run_and_check_solution
+# from app.services.solution.SolutionRunner import run_and_check_solution
 from app.models.Solution import SolutionRequest
 from app.services.solution.SolutionManager import update_if_exist_or_create
 from fastapi import APIRouter, UploadFile, File, Form
@@ -80,9 +80,9 @@ async def submit_solution(laboratory_id: str = Form(...),
         )
 
 
-@solution_router.put("/api/v1/solution/{solution_id}")
-async def check_solution(solution_id):
-    try:
-        return await run_and_check_solution(solution_id)
-    except Exception as e:
-        return JSONResponse(status_code=400, content={"error": str(e)})
+# @solution_router.put("/api/v1/solution/{solution_id}")
+# async def check_solution(solution_id):
+#     try:
+#         return await run_and_check_solution(solution_id)
+#     except Exception as e:
+#         return JSONResponse(status_code=400, content={"error": str(e)})

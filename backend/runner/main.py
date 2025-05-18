@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.Base import base_router
 from app.api.v1.Resource import resource_router
 from app.api.v1.Solution import solution_router
-from app.api.v1.TestSet import test_set_router
+# from app.api.v1.TestSet import test_set_router
 from app.services.grpc.GrpcService import serve  # Make sure this is correct
 
 # Configure logging
@@ -55,4 +55,4 @@ app.add_middleware(
 app.include_router(base_router)
 app.include_router(resource_router)
 app.include_router(solution_router)
-app.include_router(test_set_router)
+# app.include_router(test_set_router)
