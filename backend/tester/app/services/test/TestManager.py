@@ -145,7 +145,7 @@ class TestManager:
 
 # Send request to solution's endpoint
 async def send_request(request: Request, host: str):
-    url = f"http://{host}:80{request["url"]}"
+    url = f'http://{host}:80{request["url"]}'
     if request["method"] == "GET":
         response = requests.get(url, headers=request["header"])
     elif request["method"] == "DELETE":
