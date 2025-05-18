@@ -5,6 +5,7 @@ plugins {
     id 'org.springframework.boot' version '3.4.3'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'com.google.protobuf' version '0.9.4'
+    id 'checkstyle'
 }
 
 group = 'com.tad'
@@ -67,6 +68,13 @@ sourceSets{
             include("file.proto")
         }
     }
+}
+
+checkstyle {
+    toolVersion = '10.12.1' // Use latest version
+    configFile = file("${rootDir}/../checkstyle/checkstyle.xml")
+    ignoreFailures = false // Set to true if you want build to continue despite violations
+    showViolations = true
 }
 
 tasks.named('test') {
