@@ -40,7 +40,6 @@ class TestManager:
         timer = ((end - start).microseconds / 1000)
         report.time_response.append(timer)
         status = check(response, test["response"])
-        logger.info(f"a{response.content} : b{test["response"]}")
         if timer > max_response_time:
             return Status.TIMED_OUT
 
