@@ -94,8 +94,7 @@ class DockerManager:
                                     'mode': 'rw'
                                 },
                             },
-                            working_dir=f'/app/'
-                                        f'{solution.file_name.rstrip('.zip')}',
+                            working_dir=f'/app/{solution.file_name.rstrip(".zip")}',
                             ports={"80/tcp": solution.port},
                             user=resource["user"],
                             network="online-contest-net"))
