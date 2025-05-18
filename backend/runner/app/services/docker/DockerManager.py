@@ -83,23 +83,22 @@ class DockerManager:
         try:
             if not self.is_image_exists(resource["image_name"]):
                 await self.add_image(resource["image_name"])
-            return self.client.containers.create(image=resource["image_name"],
-                                                 detach=True,
-                                                 command=resource["command"],
-                                                 volumes={
-                                                    'runner_shared_volume': {
-                                                        'bind': '/app',
-                                                        'mode': 'rw'
-                                                    },
-                                                 },
-                                                 working_dir=f'/app/'
-                                                             f'{
-                                                             solution
-                                                             .file_name
-                                                             .rstrip('.zip')}',
-                                                 ports={"80/tcp": solution.port},
-                                                 user=resource["user"],
-                                                 network="online-contest-net")
+            return (self.client
+                    .containers
+                    .create(image=resource["image_name"],
+                            detach=True,
+                            command=resource["command"],
+                            volumes={
+                                'runner_shared_volume': {
+                                    'bind': '/app',
+                                    'mode': 'rw'
+                                },
+                            },
+                            working_dir=f'/app/'
+                                        f'{solution.file_name.rstrip('.zip')}',
+                            ports={"80/tcp": solution.port},
+                            user=resource["user"],
+                            network="online-contest-net"))
         except Exception as e:
             logger.error(e)
             return None
