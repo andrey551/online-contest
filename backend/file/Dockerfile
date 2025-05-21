@@ -18,12 +18,14 @@ FROM eclipse-temurin:latest
 # Create app directory
 WORKDIR /app
 
+# Create config directory
+RUN mkdir -p /app/config
+
 # Copy built JAR from the previous stage
 COPY --from=builder /home/gradle/project/build/libs/*.jar app.jar
 
 # Expose port for gRPC and HTTP
-EXPOSE 8087 8087
-EXPOSE 9090 9090
+EXPOSE 8087 9090
 
 # Run Spring Boot application
 ENTRYPOINT ["java", "-jar", "app.jar"]
