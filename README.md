@@ -30,6 +30,7 @@ Online Contest Platform is a web application designed to host programming compet
 - Custom test case evaluation engine
 
 ## Repository Structure
+````angular2html
 online-contest/
 ├── client/ # Frontend React application
 │ ├── public/ # Static assets
@@ -38,14 +39,14 @@ online-contest/
 │ ├── pages/ # Application screens
 │ ├── services/ # API service layer
 │ └── store/ # State management
-├── server/ # Backend Node.js application
+├── server/ # Backend Spring Boot application
 │ ├── config/ # Configuration files
 │ ├── controllers/ # Route controllers
 │ ├── models/ # Database models
 │ ├── routes/ # API route definitions
 │ └── utils/ # Utility functions
 └── docs/ # Project documentation
-
+````
 ## Getting Started
 ### Prerequisites
 - Node.js (v14+)
