@@ -1,4 +1,4 @@
-# Online Contest Platform - Overview
+# Programming Courses Platform - Overview
 
 ## Project Description
 Online Contest Platform is a web application designed to host programming competitions and coding challenges. It provides a complete ecosystem for running programming contests, including problem management, submission evaluation, real-time results, and user ranking systems.
