@@ -1,11 +1,11 @@
 # Programming Courses Platform - Overview
 
 ## Project Description
-Online Contest Platform is a web application designed to host programming competitions and coding challenges. It provides a complete ecosystem for running programming contests, including problem management, submission evaluation, real-time results, and user ranking systems.
+Programming Courses Platform is a platform created to automate the process of testing student solutions for subjects related to backend programming. Simply put, the backend application development process includes writing code -> deploying -> testing, this platform automates the deployment and testing process using visualization tools and metrics tools.
 
 ## Key Features
-- **Programming Contest Hosting**: Create and manage timed coding competitions
-- **Problem Management**: Add, edit, and organize programming challenges
+- **Programming Course Hosting**: Create and manage programming courses
+- **Laboratory Management**: Add, edit, and organize laboratories work
 - **Code Submission System**: Accepts code submissions in multiple programming languages
 - **Real-time Evaluation**: Automatic judging of submissions with immediate feedback
 - **User Ranking**: Leaderboard system to track participant performance
@@ -51,8 +51,10 @@ online-contest/
 ````
 ## Getting Started
 ### Prerequisites
-- Node.js (v14+)
+- Java 17
+- Python
 - MongoDB
+- PostgreSQL
 - Redis
 - Docker
 
