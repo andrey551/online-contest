@@ -25,6 +25,7 @@ Online Contest Platform is a web application designed to host programming compet
 - MongoDB & PostgreSQL- Primary database
 - Redis - For caching and real-time features
 - KeyCloak - Authentication & Authorization mechanism
+- Grafana & Promotheus: Metrics & Monitoring
 - Google Cloud Storage - Save media & solution files
 ### Judging System
 - Docker - Containerization for safe code execution
