@@ -16,15 +16,16 @@ Online Contest Platform is a web application designed to host programming compet
 - React.js - Primary frontend framework
 - Material-UI (MUI) - UI component library
 - Axios - HTTP client for API communication
+- Redux Thunk - State and data management
 - React Router - Client-side routing
 
 ### Backend
-- Node.js - Runtime environment
-- Express.js - Web application framework
-- MongoDB - Primary database (with Mongoose ODM)
+- Spring Boot.js & FastAPI- Backend server frameworks
+- gRPC - Internal communication tool
+- MongoDB & PostgreSQL- Primary database
 - Redis - For caching and real-time features
-- JSON Web Tokens (JWT) - Authentication mechanism
-
+- KeyCloak - Authentication & Authorization mechanism
+- Google Cloud Storage - Save media & solution files
 ### Judging System
 - Docker - Containerization for safe code execution
 - Custom test case evaluation engine
